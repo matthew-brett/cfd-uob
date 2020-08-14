@@ -23,7 +23,7 @@
 
 
 
-  <meta property="article:published_time" content="2020-08-14T11:44:36+01:00">
+  <meta property="article:published_time" content="2020-08-14T12:13:26+01:00">
 
 
 
@@ -1158,7 +1158,7 @@
     
     
     <a class="notebook-link" href="https://matthew-brett.github.io/cfd-uob/ipynb/02/three_girls.ipynb">Download notebook</a>
-    <a class="interact-button" href="https://oubhub.org/hub/user-redirect/git-pull?repo=https://github.com//matthew-brett/cfd-uob&amp;branch=master&amp;subPath=ipynb%2F02%2Fthree_girls.ipynb&amp;app=notebook">Interact</a>
+    <a class="interact-button" href="https://uobhub.org/hub/user-redirect/git-pull?repo=https://github.com//matthew-brett/cfd-uob&amp;branch=master&amp;subPath=ipynb%2F02%2Fthree_girls.ipynb&amp;app=notebook">Interact</a>
 
 
           <h1 id="a-simpler-problem">A simpler problem</h1>
@@ -1187,15 +1187,15 @@ like the real data.</p>
 <div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Return a random number that is either 0 or 1.
 # The second arguments, 2, tells the function to return numbers up to, but
 # not including 2.
-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0
+<div class="language-plaintext output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">np.random.randint</code> is a <em>function</em>.</p>
+<p><code class="language-plaintext highlighter-rouge">np.random.randint</code> is a <em>function</em>.</p>
 
-<p><code class="highlighter-rouge">np.random.randint(2)</code> <em>calls</em> the function, and returns a random number, that is either 0 and 1.</p>
+<p><code class="language-plaintext highlighter-rouge">np.random.randint(2)</code> <em>calls</em> the function, and returns a random number, that is either 0 and 1.</p>
 
 <p>It’s inconvenient to have to run this cell many times.   We really need some
 machinery to make the computer do that for us.  We need <em>variables</em>,
@@ -1362,7 +1362,7 @@ function updateInteractLink() {
             href = first + '?' + binder2Jupyterhub(href);
           } else {
             // If JupyterHub links, we only need to replace the hub url
-            href = href.replace("https://oubhub.org", hubUrl);
+            href = href.replace("https://uobhub.org", hubUrl);
           }
           link.setAttribute('href', decodeURIComponent(href));
 
