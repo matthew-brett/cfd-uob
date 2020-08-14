@@ -14,8 +14,8 @@ footer                   : false # Whether to include a footer with the built si
 masthead                 : true  # Whether to include a masthead (header/navbar) with the site.
 masthead_logo            : images/dsfe_logo.png
 # Textbook settings
-hub_url                  : "https://oubhub.org"  # The URL for your JupyterHub/BinderHub.
-hub_name                 : "JupyterHub"  # The name of your JupyterHub (used for the button in the NavBar. If an empty string, no button is shown)
+hub_url                  : "https://uobhub.org"  # The URL for your JupyterHub/BinderHub.
+hub_name                 : "uobhub"  # The name of your JupyterHub (used for the button in the NavBar. If an empty string, no button is shown)
 hub_type                 : "jupyterhub"  # ['binder', 'jupyterhub']  Whether to build interact links for a BinderHub or a JupyterHub
 textbook_repo_base       : "https://github.com/"  # The site on which the textbook repository is hosted
 textbook_repo_org        : "matthew-brett"  # The username or organization that owns this repository
