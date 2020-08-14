@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Background reading - Coding for Data - 2020 edition</title>
+<meta name="description" content="">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_UK">
+<meta property="og:site_name" content="Coding for Data - 2020 edition">
+<meta property="og:title" content="Coding for Data - 2020 edition">
+<meta property="og:url" content="https://matthew-brett.github.io/cfd-uob/notebooks/10/bayes_bars.Rmd">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://matthew-brett.github.io/cfd-uob/notebooks/10/bayes_bars.Rmd">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Matthew Brett",
+      "url": "https://matthew-brett.github.io/cfd-uob",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/cfd-uob/feed.xml" type="application/atom+xml" rel="alternate" title="Coding for Data - 2020 edition Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/cfd-uob/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+
+<!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/cfd-uob/assets/css/notebook-markdown.css">
+    <link rel="stylesheet" href="/cfd-uob/assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/cfd-uob/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js"></script>
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/cfd-uob/">
+          <img src="/cfd-uob/images/dsfe_logo.png" class="masthead_logo" />
+          Coding for Data - 2020 edition
+        </a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/about" >About</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/syllabus" >Syllabus</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/classes" >Classes</a>
+            </li>
+          
+          
+            <li class="masthead__menu-item">
+              <a href="/cfd-uob/chapters/01/intro">Textbook</a>
+            </li>
+          
+          
+            <li class="masthead__menu-item">
+              <a href="https://oubhub.org">JupyterHub</a>
+            </li>
+          
+        </ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <!--  -->
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        The [reverse probability page](first_bayes) has a game, that we analyzed by
+simulation, and then by reflection.
+
+The game is:
+
+* I have two boxes; *BOX4* with 4 red balls and 1 green ball, and *BOX2* with
+  two red balls and three green balls.
+* I offer you one of these two boxes at random, but with a 30% chance of
+  getting BOX4 and a 70% chance of getting BOX2.
+* You draw a ball at random from the box, and you get a red ball.
+* What is the probability that I gave you BOX4?
+
+We found by simulation, and later by reflection, that the probability is around
+0.462.
+
+The logic we discovered was:
+
+* We want the proportion of "red" trials that came from BOX4.
+* Calculate the proportion of trials that are *both* BOX4 and red, and divide
+  by the overall proportion of red trials.
+* The proportion of red trials that are *both* BOX4 *and* red is the
+  proportion of BOX4 trials multiplied by (the proportion of BOX4 trials that
+  are red).
+
+
+## Bayes calculation in bars
+
+This is another way to express that logic, using the height of bars to express
+the probabilities.
+
+First we express the initial probabilities of getting BOX4 and BOX2:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('fivethirtyeight')
+```
+
+```{python}
+box_probabilities = np.array([0.3, 0.7])
+x_locations = [0, 1]
+box_labels = ['BOX4', 'BOX2']
+plt.bar(x_locations, box_probabilities)
+plt.xticks(x_locations, box_labels)
+plt.ylabel("Probability of getting box")
+plt.title('Initial probability of boxes; P(BOX4)=0.3)');
+```
+
+Next we express the initial probabilities of getting a red ball from BOX4 and
+from BOX2:
+
+```{python}
+red_probabilities = np.array([0.8, 0.4])
+plt.bar(x_locations, red_probabilities)
+plt.xticks(x_locations, box_labels)
+plt.ylabel("Probability of getting red ball")
+plt.title('Probability of getting red for each box');
+```
+
+Next we combine the two steps, of getting a box, and then drawing a ball.
+
+There is a 0.3 probability of BOX4 and a 0.7 probability of a red ball, given
+we have BOX4, so the probability of BOX4 *and* a red ball is 0.3 (for BOX4) *
+0.8 (for red given BOX4) = 0.24.
+
+Similarly, the probability of BOX2 *and* a red ball is 0.7 (for BOX2) * 0.4
+(for red given BOX2) = 0.28.
+
+We can think of this as multiplying the values expressed by heights in the
+first bar graph (0.3, and 0.7 in this case), by the values expressed by heights
+in the second bar graph (0.8 and 0.4 in this case).
+
+```{python}
+box_and_red_probs = box_probabilities * red_probabilities
+plt.bar(x_locations, box_and_red_probs)
+plt.xticks(x_locations, box_labels)
+plt.ylabel("P of box and red ball")
+plt.title('P for each box and red; P(BOX4)=0.3');
+```
+
+Lastly, remember we are interested in the probability that we started with
+BOX4, given we have a red ball.
+
+To get this probability, we first take the probability of getting a red ball
+*and* BOX4.  This is the first bar on the graph above - 0.3 * 0.8 = 0.24.
+
+Next we divide by the overall probability of getting a red ball, which is the
+*sum of the heights of the two bars* above - 0.24 + 0.28 = 0.52.
+
+We can do this calculation by dividing the heights of the bars above by the sum
+of the heights, so the heights of the bars now sum to 1.
+
+```{python}
+box_given_red_probs = box_and_red_probs / np.sum(box_and_red_probs)
+plt.bar(x_locations, box_given_red_probs)
+plt.xticks(x_locations, box_labels)
+plt.ylabel('P of box given red')
+plt.title('P of box given red; P(BOX4)=0.3');
+```
+
+The left bar is our familiar (0.24 * 0.8) / 0.52 = 0.462 value, from the
+[reverse probability page](first_bayes).  It is the probability that we were
+given BOX4, given that we have drawn a red ball.  The second bar is the
+probability that we were given BOX2, given we have drawn a red ball.  Note that
+the height of the bars sums to 1.
+
+## Equal chances in bars
+
+Now imagine a slight change to the game; say there is an equal (50%) chance of
+getting BOX4 or BOX2:
+
+```{python}
+box_probabilities = np.array([0.5, 0.5])
+```
+
+Show the new probabilities:
+
+```{python}
+plt.bar(x_locations, box_probabilities)
+plt.xticks(x_locations, box_labels)
+plt.ylabel('P of getting box')
+plt.title('Initial P of boxes; P(BOX4)=0.5');
+```
+
+The probabilities of getting red from each box have not changed:
+
+```{python}
+plt.bar(x_locations, red_probabilities)
+plt.xticks(x_locations, box_labels)
+plt.ylabel("Probability of getting red ball")
+plt.title('Probability of getting red for each box');
+```
+
+We scale the red-ball bars by the probabilities of the boxes:
+
+```{python}
+box_and_red_probs = box_probabilities * red_probabilities
+plt.bar(x_locations, box_and_red_probs)
+plt.xticks(x_locations, box_labels)
+plt.ylabel("P of box and red ball")
+plt.title('P for each box and red (box p equal)');
+```
+
+Last we divide by the sum of the heights of the bars:
+
+```{python}
+box_given_red_probs = box_and_red_probs / np.sum(box_and_red_probs)
+plt.bar(x_locations, box_given_red_probs)
+plt.xticks(x_locations, box_labels)
+plt.ylabel('P of box given red')
+plt.title('P of box given red; P(BOX4)=0.5');
+```
+
+Because the probability that we got BOX4 increased, the probability that we got
+BOX4, given we drew a red ball, has also increased.  That probability is now:
+
+```{python}
+print('P(BOX4 | red)', box_given_red_probs[0])
+```
+
+Remember our steps:
+
+1. Get the probability of red given each box --- here: (0.8, 0.4);
+2. Scale these by the probability of each box --- here: (0.5, 0.5);
+3. Divide the results by the sum of the heights to get the reverse
+   probabilities --- here (0.67, 0.34).
+
+```{python}
+# Step 1 - P of reds.
+red_probabilities = np.array([0.8, 0.4])
+# Step 2 - scale by P of the boxes
+box_probabilities = np.array([0.5, 0.5])
+box_and_red_probs = box_probabilities * red_probabilities
+# Step 3 - divide each bar by sum of bar heights.
+box_given_red_probs = box_and_red_probs / np.sum(box_and_red_probs)
+# Show result
+box_given_red_probs
+```
+
+Notice also, in this case, where the probability of each box is the same, we
+can miss out step 2.  This is because, when the probability of each box is the
+same, scaling the probability does not change the heights of the bars relative
+to each other, so, when we divide each bar by the sum of the bar heights, the
+result is the same.
+
+```{python}
+# When box probabilities are equal, we can miss out step 2.
+# Step 1 - P of reds.
+red_probabilities = np.array([0.8, 0.4])
+# Step 3 - divide each bar by sum of bar heights.
+shortcut_box_given_red_probs = red_probabilities / np.sum(red_probabilities)
+# Show result is the same as with step 2.
+shortcut_box_given_red_probs
+```
+
+If you do not mind a little basic algebra, see why this must be true in the
+[equal initial p](/cfd-uob/chapters/10/equal_initial_p) page.
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    
+
+    
+  <script src="/cfd-uob/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+
+
+<script src="/cfd-uob/assets/js/lunr/lunr.min.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-store.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- Custom scripts to load after site JS is loaded -->
+
+    <!-- Custom HTML used for the textbooks -->
+<!-- Configure, then load MathJax -->
+<script type="text/javascript">
+  window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      processEnvironments: true
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// --- To auto-embed hub URLs in interact links if given in a RESTful fashion ---
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return jQuery.param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = $("a").each(function() {
+    var href = this.href;
+    // If the link is an internal link...
+    if (href.search("https://matthew-brett.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + jQuery.param(params);
+      this.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+  // Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = $("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          if ('jupyterhub' == 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("https://oubhub.org", hubUrl);
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          $("a.interact-button").after($('<div class="interact-context">on ' + hubUrlNoHttp + '</div>'));
+
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+// --- Highlight the part of sidebar for current page ---
+
+// helper to replace trailing slash
+function replaceSlash(string)
+{
+    return string.replace(/\/$/, "");
+}
+
+// Add a class to the current page in the sidebar
+function highlightSidebarCurrentPage()
+{
+  var currentpage = location.href;
+  var links = $('.sidebar .nav__items a');
+  var ii = 0;
+  for(ii; ii < links.length; ii++) {
+    var link = links[ii];
+    if(replaceSlash(link.href) == replaceSlash(currentpage)) {
+      // Add CSS for styling
+      link.classList.add("current");
+      // Scroll to this element
+      $('div.sidebar').scrollTop(link.offsetTop - 300);
+    }
+  }
+}
+
+// --- Set up copy/paste for code blocks ---
+function addCopyButtonToCode(){
+  // get all <code> elements
+  var allCodeBlocksElements = $( "div.input_area code, div.highlighter-rouge code" );
+
+  allCodeBlocksElements.each(function(ii) {
+   	// add different id for each code block
+
+  	// target
+    var currentId = "codeblock" + (ii + 1);
+    $(this).attr('id', currentId);
+
+    //trigger
+    var clipButton = '<button class="btn copybtn" data-clipboard-target="#' + currentId + '"><img src="https://clipboardjs.com/assets/images/clippy.svg" width="13" alt="Copy to clipboard"></button>';
+       $(this).after(clipButton);
+    });
+
+    new Clipboard('.btn');
+}
+
+// Run scripts when page is loaded
+$(document).ready(function () {
+  // Add anchors to H1 etc links
+  anchors.add();
+  // Highlight current page in sidebar
+  highlightSidebarCurrentPage();
+  // Add copy button to code blocks
+  addCopyButtonToCode();
+  // Update the Interact link if a REST param given
+  updateInteractLink();
+});
+</script>
+
+  </body>
+</html>

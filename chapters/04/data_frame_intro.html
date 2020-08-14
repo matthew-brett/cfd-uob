@@ -1,0 +1,4160 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>4.1 Introduction to data frames - Coding for Data - 2020 edition</title>
+<meta name="description" content="Introduction to data frames">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_UK">
+<meta property="og:site_name" content="Coding for Data - 2020 edition">
+<meta property="og:title" content="4.1 Introduction to data frames">
+<meta property="og:url" content="https://matthew-brett.github.io/cfd-uob/chapters/04/data_frame_intro">
+
+
+  <meta property="og:description" content="Introduction to data frames">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-08-14T11:44:36+01:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://matthew-brett.github.io/cfd-uob/chapters/04/data_frame_intro">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Matthew Brett",
+      "url": "https://matthew-brett.github.io/cfd-uob",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/cfd-uob/feed.xml" type="application/atom+xml" rel="alternate" title="Coding for Data - 2020 edition Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/cfd-uob/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+
+<!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/cfd-uob/assets/css/notebook-markdown.css">
+    <link rel="stylesheet" href="/cfd-uob/assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/cfd-uob/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js"></script>
+  </head>
+
+  <body class="layout--textbook">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" class="textbook" role="main">
+  <div id="textbook_wrapper">
+    
+  <div class="sidebar sticky textbook">
+  
+  
+    <img src="/cfd-uob/images/dsfe_logo.png" class="textbook_logo" />
+    
+
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/"><span class="nav__sub-title">Home</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/01/intro"><span class="nav__sub-title">1. Coding for data</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/what-is-data-science" class="level_1">1.1 What is data science?</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/why-data-science" class="level_1">1.2 Why data science?</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/tools_techniques" class="level_1">1.3 Tools and techniques</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/computational-tools" class="level_2">1.3.1 Computational tools</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/statistical-techniques" class="level_2">1.3.2 Statistical techniques</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/Plotting_the_Classics" class="level_1">1.4 Plotting the classics</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/Literary_Characters" class="level_2">1.4.1 Literary characters</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/Another_Kind_Of_Character" class="level_2">1.4.2 Another kind of character</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/surviving_computers" class="level_1">1.5 Surviving the computer</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/the_software" class="level_1">1.6 About the software</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/using_jupyter" class="level_1">1.7 Using the Jupyter notebook</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/more_on_jupyter" class="level_1">1.8 More on the Jupyter notebook</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/02/to_code"><span class="nav__sub-title">2. Programming</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/sampling_problem" class="level_1">2.1 A sampling problem</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/three_girls" class="level_1">2.2 A simpler problem</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/variables_intro" class="level_1">2.3 Introduction to variables</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/functions" class="level_1">2.4 Introduction to functions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/first_pass_three_girls" class="level_1">2.5 A first pass</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/Expressions" class="level_1">2.6 Expressions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/Calls" class="level_1">2.7 Call expressions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/sub_expressions" class="level_1">2.8 Sub-expressions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/Names" class="level_1">2.9 Names and variables</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/03/data_types"><span class="nav__sub-title">3. Data types</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Numbers" class="level_1">3.1 Numbers</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Strings" class="level_1">3.2 Strings</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/String_Methods" class="level_2">3.2.1 String methods</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Comparison" class="level_1">3.3 Comparison</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/lists" class="level_1">3.4 Lists</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Arrays" class="level_1">3.5 Arrays</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Ranges" class="level_1">3.6 Ranges</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/numpy_append" class="level_1">3.7 Append</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/function_arguments" class="level_1">3.8 Function arguments</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/leaping_ahead" class="level_1">3.9 Leaping ahead</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/iteration" class="level_1">3.10 Iteration with For loops</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/indentation" class="level_1">3.11 Indentation, indentation</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/reply_supreme" class="level_1">3.12 Reply to the Supreme Court</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/More_on_Arrays" class="level_1">3.13 More on arrays</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/array_indexing" class="level_1">3.14 Selecting in arrays</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/filling_arrays" class="level_1">3.15 Filling arrays</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/04/data_frames"><span class="nav__sub-title">4. Data frames</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/04/data_frame_intro" class="level_1">4.1 Introduction to data frames</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/04/df_series_arrays" class="level_1">4.2 Data frames, Series and arrays</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/05/permutation"><span class="nav__sub-title">5. Permutations</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/population_permutation" class="level_1">5.1 Population and permutation</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/brexit_ages" class="level_1">5.2 A permutation test</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/permutation_idea" class="level_1">5.3 The permutation idea</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/permutation_and_t_test" class="level_1">5.4 Permutation and the t-test</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/testing_t" class="level_1">5.5 Testing validity of tests</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/07/more_building_blocks"><span class="nav__sub-title">6. More building blocks</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/introducing_functions" class="level_1">6.1 Introduction to functions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/none" class="level_1">6.2 On None</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/functions" class="level_1">6.3 Functions in more detail</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/functions_as_values" class="level_1">6.4 Functions as values</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/conditional_statements" class="level_1">6.5 Conditional statements</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/pandas_indexing" class="level_1">6.6 Indexing in Pandas</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/noble_politics" class="level_1">6.7 Example: noble politics</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/safe_pandas" class="level_1">6.8 Safe Pandas</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/text_encoding" class="level_1">6.9 Text encoding</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/numbers_and_strings" class="level_1">6.10 Numbers and strings</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/08/mean"><span class="nav__sub-title">7. The mean and straight line relationships</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/mean_meaning" class="level_1">7.1 The mean as a predictor</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/where_and_argmin" class="level_1">7.2 Where and argmin</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/mean_and_slopes" class="level_1">7.3 Mean and slopes</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/optimization" class="level_1">7.4 Optimization</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/finding_lines" class="level_1">7.5 Finding lines</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/using_minimize" class="level_1">7.6 Using minimize</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/inference_on_slopes" class="level_1">7.7 Believable slopes</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/combining_boolean_arrays" class="level_1">7.8 Combining Booleans</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/standard_scores" class="level_1">7.9 Standard scores</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/Correlation" class="level_1">7.10 Correlation</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/09/classification"><span class="nav__sub-title">8. Classification</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Nearest_Neighbors" class="level_1">8.2 Nearest neighbors</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Training_and_Testing" class="level_1">8.3 Training and testing</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Rows_of_Tables" class="level_1">8.4 Rows of tables</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Implementing_the_Classifier" class="level_1">8.5 Implementing the classifier</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Accuracy_of_the_Classifier" class="level_1">8.6 Accuracy of the classifier</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/10/confidence"><span class="nav__sub-title">9. Confidence</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/havana_math" class="level_1">9.1 The education minister</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/random_choice" class="level_1">9.2 Random choice</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/first_bayes" class="level_1">9.2 Reverse probability</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/bayes_bars" class="level_1">9.3 Bayes bars</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/second_bayes" class="level_1">9.4 Confidence in bars</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/end/end_of_beginning"><span class="nav__sub-title">10. The end of the beginning</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/exercises/exercises"><span class="nav__sub-title">Exercises</span></a>
+        
+
+        
+        <ul>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/extra/extra"><span class="nav__sub-title">Extra pages</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/more_on_lists" class="level_1">More on lists</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/monty_hall_lists" class="level_1">Monty Hall with lists</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/data8_functions" class="level_1">Berkeley introduction to functions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/mean_deviations" class="level_1">Deviations around the mean</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/mean_sq_deviations" class="level_1">Squared deviations around the mean</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/slope_deviations" class="level_1">Finding the best slope</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+
+  
+  </div>
+
+
+    <article class="page textbook" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="headline" content="4.1 Introduction to data frames">
+      <meta itemprop="description" content="Introduction to data frames">
+      <meta itemprop="datePublished" content="August 14, 2020">
+      
+
+      <div class="page__inner-wrap">
+        
+          <header>
+            <h1 id="page-title" class="page__title" itemprop="headline">4.1 Introduction to data frames
+</h1>
+          </header>
+        
+
+        <section class="page__content" itemprop="text">
+          
+            
+
+<!-- TOC will only show up if it has at least one item -->
+
+
+  <aside class="sidebar__right">
+    <nav class="toc">
+      <header><h4 class="nav__title"><i class="fas fa-list-ul"></i>   On this page</h4></header>
+      <ul class="toc__menu">
+  <li><a href="#data-frames-and-series">Data frames and series</a></li>
+  <li><a href="#missing-values-and-nan">Missing values and NaN</a></li>
+  <li><a href="#plotting-with-methods">Plotting with methods</a></li>
+  <li><a href="#showing-the-top-5-values-with-the-head-method">Showing the top 5 values with the head method</a></li>
+  <li><a href="#selecting-rows">Selecting rows</a></li>
+  <li><a href="#sorting-data-frames">Sorting data frames</a></li>
+  <li><a href="#calculation-on-data-frames">Calculation on data frames</a></li>
+</ul>
+    </nav>
+  </aside>
+
+
+          
+          <!-- INTERACT LINKS -->
+
+    
+    
+    <a class="notebook-link" href="https://matthew-brett.github.io/cfd-uob/ipynb/04/data_frame_intro.ipynb">Download notebook</a>
+    <a class="interact-button" href="https://oubhub.org/hub/user-redirect/git-pull?repo=https://github.com//matthew-brett/cfd-uob&amp;branch=master&amp;subPath=ipynb%2F04%2Fdata_frame_intro.ipynb&amp;app=notebook">Interact</a>
+
+
+          <h1 id="introduction-to-data-frames">Introduction to data frames</h1>
+
+<p><a href="https://pandas.pydata.org">Pandas</a> is a Python package that
+implements data frames, and functions that operate on data
+frames.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the Pands data science library, call it 'pd'
+</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<p>We will also use the usual Numpy array library:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the Numpy array library, call it 'np'
+</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<h2 id="data-frames-and-series">Data frames and series</h2>
+
+<p>We start by loading data from a Comma Separated Value file (CSV
+file).  If you are running on your laptop, you should download
+the <a href="/cfd-uob/data/gender_stats.csv">gender_stats.csv</a>
+file to the same directory as this notebook.</p>
+
+<p>See the <a href="/cfd-uob/data/gender_stats">gender statistics description page</a> for more detail on the dataset.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the data file
+</span><span class="n">gender_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'gender_stats.csv'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This is our usual assignment statement. The LHS is <code class="highlighter-rouge">gender_data</code>, the variable name.  The RHS is an expression, that returns a value.</p>
+
+<p>What type of value does it return?</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">type</span><span class="p">(</span><span class="n">gender_data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.core.frame.DataFrame
+</code></pre></div></div>
+
+<p>Pandas integrates with the Notebook, so, if you display a data
+frame in the notebook, it does a nice display of rows and
+columns.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender_data</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aruba</td>
+      <td>ABW</td>
+      <td>1.663250</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.721939</td>
+      <td>NaN</td>
+      <td>0.103744</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>4.954500</td>
+      <td>19.961015</td>
+      <td>161.138034</td>
+      <td>2.834598</td>
+      <td>40.109708</td>
+      <td>444.00</td>
+      <td>32.715838</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>AGO</td>
+      <td>6.123000</td>
+      <td>111.936542</td>
+      <td>254.747970</td>
+      <td>2.447546</td>
+      <td>NaN</td>
+      <td>501.25</td>
+      <td>26.937545</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>1.769250</td>
+      <td>12.327586</td>
+      <td>574.202694</td>
+      <td>2.836021</td>
+      <td>47.201082</td>
+      <td>29.25</td>
+      <td>2.888280</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Andorra</td>
+      <td>AND</td>
+      <td>NaN</td>
+      <td>3.197538</td>
+      <td>4421.224933</td>
+      <td>7.260281</td>
+      <td>47.123345</td>
+      <td>NaN</td>
+      <td>0.079547</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>United Arab Emirates</td>
+      <td>ARE</td>
+      <td>1.793000</td>
+      <td>375.027082</td>
+      <td>2202.407569</td>
+      <td>2.581168</td>
+      <td>48.789260</td>
+      <td>6.00</td>
+      <td>9.080299</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Argentina</td>
+      <td>ARG</td>
+      <td>2.328000</td>
+      <td>550.980968</td>
+      <td>1148.256142</td>
+      <td>2.782216</td>
+      <td>48.915810</td>
+      <td>53.75</td>
+      <td>42.976675</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Armenia</td>
+      <td>ARM</td>
+      <td>1.545500</td>
+      <td>10.885362</td>
+      <td>348.663884</td>
+      <td>1.916016</td>
+      <td>46.782180</td>
+      <td>27.25</td>
+      <td>2.904683</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>American Samoa</td>
+      <td>ASM</td>
+      <td>NaN</td>
+      <td>0.640500</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.055422</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Antigua and Barbuda</td>
+      <td>ATG</td>
+      <td>2.082000</td>
+      <td>1.298213</td>
+      <td>1152.493656</td>
+      <td>3.676514</td>
+      <td>48.291463</td>
+      <td>NaN</td>
+      <td>0.098872</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Australia</td>
+      <td>AUS</td>
+      <td>1.861500</td>
+      <td>1422.994116</td>
+      <td>4256.058988</td>
+      <td>6.292381</td>
+      <td>48.576707</td>
+      <td>6.00</td>
+      <td>23.444560</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Austria</td>
+      <td>AUT</td>
+      <td>1.455000</td>
+      <td>407.494276</td>
+      <td>4930.298893</td>
+      <td>8.504276</td>
+      <td>48.556078</td>
+      <td>4.00</td>
+      <td>8.566294</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Azerbaijan</td>
+      <td>AZE</td>
+      <td>1.980000</td>
+      <td>62.003001</td>
+      <td>956.709718</td>
+      <td>1.197249</td>
+      <td>46.157363</td>
+      <td>25.25</td>
+      <td>9.531856</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Burundi</td>
+      <td>BDI</td>
+      <td>5.992250</td>
+      <td>2.876978</td>
+      <td>59.693830</td>
+      <td>4.433749</td>
+      <td>50.481971</td>
+      <td>747.25</td>
+      <td>9.907015</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Belgium</td>
+      <td>BEL</td>
+      <td>1.755000</td>
+      <td>494.221836</td>
+      <td>4297.838005</td>
+      <td>8.221003</td>
+      <td>48.864675</td>
+      <td>7.00</td>
+      <td>11.228495</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Benin</td>
+      <td>BEN</td>
+      <td>4.806750</td>
+      <td>8.778151</td>
+      <td>83.726190</td>
+      <td>2.206916</td>
+      <td>47.211127</td>
+      <td>417.50</td>
+      <td>10.293715</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Burkina Faso</td>
+      <td>BFA</td>
+      <td>5.564500</td>
+      <td>11.753054</td>
+      <td>87.143009</td>
+      <td>3.021246</td>
+      <td>48.217520</td>
+      <td>384.25</td>
+      <td>17.597395</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Bangladesh</td>
+      <td>BGD</td>
+      <td>2.193250</td>
+      <td>174.545099</td>
+      <td>85.968844</td>
+      <td>0.860447</td>
+      <td>50.460564</td>
+      <td>194.75</td>
+      <td>159.371214</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Bulgaria</td>
+      <td>BGR</td>
+      <td>1.510000</td>
+      <td>53.797612</td>
+      <td>1266.857003</td>
+      <td>4.243437</td>
+      <td>48.310802</td>
+      <td>10.75</td>
+      <td>7.220151</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Bahrain</td>
+      <td>BHR</td>
+      <td>2.065250</td>
+      <td>32.004011</td>
+      <td>2030.158316</td>
+      <td>2.976386</td>
+      <td>49.116838</td>
+      <td>15.25</td>
+      <td>1.349810</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bahamas, The</td>
+      <td>BHS</td>
+      <td>1.877250</td>
+      <td>8.688000</td>
+      <td>1727.128385</td>
+      <td>3.308626</td>
+      <td>NaN</td>
+      <td>81.50</td>
+      <td>0.381904</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Bosnia and Herzegovina</td>
+      <td>BIH</td>
+      <td>1.267000</td>
+      <td>17.323327</td>
+      <td>941.504655</td>
+      <td>6.841021</td>
+      <td>48.634905</td>
+      <td>11.75</td>
+      <td>3.574396</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Belarus</td>
+      <td>BLR</td>
+      <td>1.677000</td>
+      <td>64.782942</td>
+      <td>986.236757</td>
+      <td>3.876601</td>
+      <td>48.685741</td>
+      <td>4.00</td>
+      <td>9.480348</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Belize</td>
+      <td>BLZ</td>
+      <td>2.594750</td>
+      <td>1.680325</td>
+      <td>471.967465</td>
+      <td>3.744844</td>
+      <td>48.317238</td>
+      <td>29.25</td>
+      <td>0.351764</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Bermuda</td>
+      <td>BMU</td>
+      <td>1.617500</td>
+      <td>5.555624</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.423588</td>
+      <td>NaN</td>
+      <td>0.065101</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Bolivia</td>
+      <td>BOL</td>
+      <td>2.995250</td>
+      <td>31.509324</td>
+      <td>381.007594</td>
+      <td>4.192031</td>
+      <td>48.464175</td>
+      <td>218.25</td>
+      <td>10.562803</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Brazil</td>
+      <td>BRA</td>
+      <td>1.795250</td>
+      <td>2198.765606</td>
+      <td>1303.199104</td>
+      <td>3.773473</td>
+      <td>47.784577</td>
+      <td>49.50</td>
+      <td>204.159544</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Barbados</td>
+      <td>BRB</td>
+      <td>1.792250</td>
+      <td>4.413080</td>
+      <td>1062.840088</td>
+      <td>4.828680</td>
+      <td>48.878181</td>
+      <td>28.00</td>
+      <td>0.283338</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Brunei Darussalam</td>
+      <td>BRN</td>
+      <td>1.884000</td>
+      <td>15.719223</td>
+      <td>1795.924160</td>
+      <td>2.335194</td>
+      <td>48.523699</td>
+      <td>23.75</td>
+      <td>0.411581</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Bhutan</td>
+      <td>BTN</td>
+      <td>2.061250</td>
+      <td>1.975145</td>
+      <td>277.526670</td>
+      <td>2.706908</td>
+      <td>49.572296</td>
+      <td>161.75</td>
+      <td>0.775905</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>186</th>
+      <td>Turks and Caicos Islands</td>
+      <td>TCA</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.846884</td>
+      <td>NaN</td>
+      <td>0.033703</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>Chad</td>
+      <td>TCD</td>
+      <td>6.211000</td>
+      <td>11.945942</td>
+      <td>69.904561</td>
+      <td>1.725194</td>
+      <td>42.929245</td>
+      <td>892.25</td>
+      <td>13.574024</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td>Togo</td>
+      <td>TGO</td>
+      <td>4.620000</td>
+      <td>4.183610</td>
+      <td>71.263825</td>
+      <td>2.037809</td>
+      <td>48.270471</td>
+      <td>380.75</td>
+      <td>7.230904</td>
+    </tr>
+    <tr>
+      <th>189</th>
+      <td>Thailand</td>
+      <td>THA</td>
+      <td>1.516750</td>
+      <td>406.136904</td>
+      <td>581.927487</td>
+      <td>3.183842</td>
+      <td>48.213034</td>
+      <td>21.00</td>
+      <td>68.384986</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>Tajikistan</td>
+      <td>TJK</td>
+      <td>3.495750</td>
+      <td>8.036228</td>
+      <td>169.745970</td>
+      <td>1.976367</td>
+      <td>48.260680</td>
+      <td>33.25</td>
+      <td>8.363844</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <td>Turkmenistan</td>
+      <td>TKM</td>
+      <td>2.313750</td>
+      <td>37.973096</td>
+      <td>288.572644</td>
+      <td>1.349303</td>
+      <td>48.906879</td>
+      <td>43.50</td>
+      <td>5.465637</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <td>Timor-Leste</td>
+      <td>TLS</td>
+      <td>5.797750</td>
+      <td>1.361430</td>
+      <td>98.577296</td>
+      <td>1.140440</td>
+      <td>48.337367</td>
+      <td>240.25</td>
+      <td>1.212718</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>Tonga</td>
+      <td>TON</td>
+      <td>3.745750</td>
+      <td>0.439179</td>
+      <td>250.962504</td>
+      <td>3.987285</td>
+      <td>47.697931</td>
+      <td>129.25</td>
+      <td>0.105909</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Trinidad and Tobago</td>
+      <td>TTO</td>
+      <td>1.782750</td>
+      <td>24.570947</td>
+      <td>1778.148073</td>
+      <td>3.071370</td>
+      <td>NaN</td>
+      <td>63.25</td>
+      <td>1.353877</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>Tunisia</td>
+      <td>TUN</td>
+      <td>2.140000</td>
+      <td>44.824374</td>
+      <td>782.950522</td>
+      <td>4.118771</td>
+      <td>48.142132</td>
+      <td>63.25</td>
+      <td>11.144409</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>Turkey</td>
+      <td>TUR</td>
+      <td>2.078000</td>
+      <td>895.175577</td>
+      <td>997.374772</td>
+      <td>4.189521</td>
+      <td>48.789477</td>
+      <td>17.50</td>
+      <td>77.034345</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Tuvalu</td>
+      <td>TUV</td>
+      <td>NaN</td>
+      <td>0.036470</td>
+      <td>563.500592</td>
+      <td>15.506929</td>
+      <td>47.472414</td>
+      <td>NaN</td>
+      <td>0.010910</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>Tanzania</td>
+      <td>TZA</td>
+      <td>5.181250</td>
+      <td>44.935542</td>
+      <td>131.704162</td>
+      <td>2.648609</td>
+      <td>50.666580</td>
+      <td>429.50</td>
+      <td>52.281324</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>Uganda</td>
+      <td>UGA</td>
+      <td>5.822500</td>
+      <td>25.941461</td>
+      <td>132.892684</td>
+      <td>2.014349</td>
+      <td>50.099485</td>
+      <td>366.50</td>
+      <td>38.865339</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>Ukraine</td>
+      <td>UKR</td>
+      <td>1.510250</td>
+      <td>135.379275</td>
+      <td>628.579254</td>
+      <td>3.960185</td>
+      <td>48.984198</td>
+      <td>24.25</td>
+      <td>45.302704</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>Uruguay</td>
+      <td>URY</td>
+      <td>2.027000</td>
+      <td>54.345132</td>
+      <td>1721.507752</td>
+      <td>6.044403</td>
+      <td>48.295555</td>
+      <td>15.50</td>
+      <td>3.419977</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1.860875</td>
+      <td>17369.124600</td>
+      <td>9060.068657</td>
+      <td>8.121961</td>
+      <td>48.758830</td>
+      <td>14.00</td>
+      <td>318.558175</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>Uzbekistan</td>
+      <td>UZB</td>
+      <td>2.372750</td>
+      <td>61.340649</td>
+      <td>334.476754</td>
+      <td>3.118842</td>
+      <td>48.387434</td>
+      <td>37.00</td>
+      <td>30.784500</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>St. Vincent and the Grenadines</td>
+      <td>VCT</td>
+      <td>1.986000</td>
+      <td>0.730107</td>
+      <td>775.803386</td>
+      <td>4.365757</td>
+      <td>48.536415</td>
+      <td>45.75</td>
+      <td>0.109421</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td>Venezuela, RB</td>
+      <td>VEN</td>
+      <td>2.378250</td>
+      <td>376.146268</td>
+      <td>896.815314</td>
+      <td>1.587088</td>
+      <td>48.400934</td>
+      <td>97.00</td>
+      <td>30.734524</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>British Virgin Islands</td>
+      <td>VGB</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>47.581520</td>
+      <td>NaN</td>
+      <td>0.029585</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>Virgin Islands (U.S.)</td>
+      <td>VIR</td>
+      <td>1.760000</td>
+      <td>3.812000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.104141</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>Vietnam</td>
+      <td>VNM</td>
+      <td>1.959500</td>
+      <td>181.820736</td>
+      <td>368.374550</td>
+      <td>3.779501</td>
+      <td>48.021053</td>
+      <td>54.75</td>
+      <td>90.742400</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>Vanuatu</td>
+      <td>VUT</td>
+      <td>3.364750</td>
+      <td>0.782876</td>
+      <td>125.568712</td>
+      <td>3.689874</td>
+      <td>47.301617</td>
+      <td>82.50</td>
+      <td>0.258896</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>Samoa</td>
+      <td>WSM</td>
+      <td>4.118250</td>
+      <td>0.799887</td>
+      <td>366.353096</td>
+      <td>5.697059</td>
+      <td>48.350049</td>
+      <td>54.75</td>
+      <td>0.192225</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>Kosovo</td>
+      <td>XKX</td>
+      <td>2.142500</td>
+      <td>6.804620</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.813820</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>Yemen, Rep.</td>
+      <td>YEM</td>
+      <td>4.225750</td>
+      <td>36.819337</td>
+      <td>207.949700</td>
+      <td>1.417836</td>
+      <td>44.470076</td>
+      <td>399.75</td>
+      <td>26.246608</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>South Africa</td>
+      <td>ZAF</td>
+      <td>2.375250</td>
+      <td>345.209888</td>
+      <td>1123.142656</td>
+      <td>4.241441</td>
+      <td>48.516298</td>
+      <td>143.75</td>
+      <td>54.177209</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>5.394250</td>
+      <td>24.280990</td>
+      <td>185.556359</td>
+      <td>2.687290</td>
+      <td>49.934484</td>
+      <td>233.75</td>
+      <td>15.633220</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>3.943000</td>
+      <td>15.495514</td>
+      <td>115.519881</td>
+      <td>2.695188</td>
+      <td>49.529875</td>
+      <td>398.00</td>
+      <td>15.420964</td>
+    </tr>
+  </tbody>
+</table>
+<p>216 rows × 9 columns</p>
+</div>
+</div>
+
+<p>The data frame has rows and columns.  Like other Python objects, it has <em>attributes</em>.  These are pieces of data associated with the data frame.  You have already seen <em>methods</em>, which are functions associated with the data frame.  You can access attributes in the same way as you access methods, by typing the variable name, followed by a dot <code class="highlighter-rouge">.</code>, followed by the attribute name.</p>
+
+<p>For example, one attribute of the data frame, is the <code class="highlighter-rouge">shape</code>:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender_data</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(216, 9)
+</code></pre></div></div>
+
+<p>Another attribute is <code class="highlighter-rouge">columns</code>.  This has the column names. For
+example, here is a good way of quickly seeing the column names
+for a data frame:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender_data</span><span class="o">.</span><span class="n">columns</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Index(['country_name', 'country_code', 'fert_rate', 'gdp_us_billion',
+       'health_exp_per_cap', 'health_exp_pub', 'prim_ed_girls',
+       'mat_mort_ratio', 'population'],
+      dtype='object')
+</code></pre></div></div>
+
+<p>You need more information about what these column names refer to.  Here are the longer descriptions from the original data source (link above):</p>
+
+<ul>
+  <li><code class="highlighter-rouge">fert_rate</code>: Fertility rate, total (births per woman).</li>
+  <li><code class="highlighter-rouge">gdp_us_billion</code>: GDP (in current US \$ billions).</li>
+  <li><code class="highlighter-rouge">health_exp_per_cap</code>: Health expenditure per capita, PPP (constant 2011 international \$).</li>
+  <li><code class="highlighter-rouge">health_exp_pub</code>: Health expenditure, public (% of GDP).</li>
+  <li><code class="highlighter-rouge">prim_ed_girls</code>: Primary education, pupils (% female).</li>
+  <li><code class="highlighter-rouge">mat_mort_ratio</code>: Maternal mortality ratio (modeled estimate, per 100,000 live births).</li>
+  <li><code class="highlighter-rouge">population</code>: Population, total.</li>
+</ul>
+
+<p>You have just seen array slicing (in <a href="../03/array_indexing">Selecting with
+arrays</a>.  You remember that array slicing
+uses square brackets.   Data frames also allow slicing.  For
+example, we often want to get all the data for a single column
+of the data frame.  To do this, we use the same square bracket
+notation as we use for array slicing, with the name of the
+column inside the square brackets.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gdp</span> <span class="o">=</span> <span class="n">gender_data</span><span class="p">[</span><span class="s">'gdp_us_billion'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>What <code class="highlighter-rouge">type</code> of thing is this column of data?</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">type</span><span class="p">(</span><span class="n">gdp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.core.series.Series
+</code></pre></div></div>
+
+<p>Here are the values for <code class="highlighter-rouge">gdp</code>.  You will notice that these are the
+same values you saw in the “gdp_us_billion” column when you displayed the whole
+data frame.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gdp</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0               NaN
+1         19.961015
+2        111.936542
+3         12.327586
+4          3.197538
+5        375.027082
+6        550.980968
+7         10.885362
+8          0.640500
+9          1.298213
+10      1422.994116
+11       407.494276
+12        62.003001
+13         2.876978
+14       494.221836
+15         8.778151
+16        11.753054
+17       174.545099
+18        53.797612
+19        32.004011
+20         8.688000
+21        17.323327
+22        64.782942
+23         1.680325
+24         5.555624
+25        31.509324
+26      2198.765606
+27         4.413080
+28        15.719223
+29         1.975145
+           ...     
+186             NaN
+187       11.945942
+188        4.183610
+189      406.136904
+190        8.036228
+191       37.973096
+192        1.361430
+193        0.439179
+194       24.570947
+195       44.824374
+196      895.175577
+197        0.036470
+198       44.935542
+199       25.941461
+200      135.379275
+201       54.345132
+202    17369.124600
+203       61.340649
+204        0.730107
+205      376.146268
+206             NaN
+207        3.812000
+208      181.820736
+209        0.782876
+210        0.799887
+211        6.804620
+212       36.819337
+213      345.209888
+214       24.280990
+215       15.495514
+Name: gdp_us_billion, Length: 216, dtype: float64
+</code></pre></div></div>
+
+<h2 id="missing-values-and-nan">Missing values and <code class="highlighter-rouge">NaN</code></h2>
+
+<p>Looking at the values of <code class="highlighter-rouge">gdp</code> (and therefore, the values of the
+<code class="highlighter-rouge">gdp_us_billion</code> column of <code class="highlighter-rouge">gender_data</code>, we see that some of the values are
+<code class="highlighter-rouge">NaN</code>, which means Not a Number.  Pandas uses this marker to indicate values
+that are not available, or <em>missing data</em>.</p>
+
+<p>Numpy does not like to calculate with <code class="highlighter-rouge">NaN</code> values.  Here is Numpy trying to
+calculate the median of the <code class="highlighter-rouge">gdp</code> values.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">gdp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/mb312/Library/Python/3.7/lib/python/site-packages/numpy/lib/function_base.py:3250: RuntimeWarning: Invalid value encountered in median
+  r = func(a, **kwargs)
+
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nan
+</code></pre></div></div>
+
+<p>Notice the warning about an invalid value.</p>
+
+<p>Numpy recognizes that one or more values are <code class="highlighter-rouge">NaN</code> and refuses to guess what to do, when calculating the median.</p>
+
+<p>You saw from the shape above that <code class="highlighter-rouge">gender_data</code> has 263 rows.  We can use the
+general Python <code class="highlighter-rouge">len</code> function, to see how many elements there are in <code class="highlighter-rouge">gdp</code>.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">gdp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>216
+</code></pre></div></div>
+
+<p>As expected, it has the same number of elements as there are rows in <code class="highlighter-rouge">gender_data</code>.</p>
+
+<p>The <code class="highlighter-rouge">count</code> method of the series gives the number of values that are not missing - that is - not <code class="highlighter-rouge">NaN</code>.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gdp</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>200
+</code></pre></div></div>
+
+<h2 id="plotting-with-methods">Plotting with methods</h2>
+
+<p>We start with the magic incantation to load the plotting library.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the library for plotting, name it 'plt'
+</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="c1"># Display plots inside the notebook.
+</span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="c1"># Make plots look a little more fancy
+</span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'fivethirtyeight'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">gdp</code> variable is a sequence of values, so we can do a histogram on these
+values, as we have done histograms on arrays.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">gdp</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="output_stream highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Users/mb312/Library/Python/3.7/lib/python/site-packages/numpy/lib/histograms.py:754: RuntimeWarning: invalid value encountered in greater_equal
+  keep = (tmp_a &gt;= first_edge)
+/Users/mb312/Library/Python/3.7/lib/python/site-packages/numpy/lib/histograms.py:755: RuntimeWarning: invalid value encountered in less_equal
+  keep &amp;= (tmp_a &lt;= last_edge)
+
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_32_1.png" alt="png" /></p>
+
+<p>Notice the multiple warnings as Matplotlib tried to calculate the bin widths for the histogram.  These warnings result from Matplotlib struggline with <code class="highlighter-rouge">NaN</code> values.</p>
+
+<p>Another way to do the histogram, is to use the <code class="highlighter-rouge">hist</code> <em>method</em> of the series.</p>
+
+<p>A method is a function attached to a value.  In this case <code class="highlighter-rouge">hist</code> is a function attached to a value of type <code class="highlighter-rouge">Series</code>.</p>
+
+<p>Using the <code class="highlighter-rouge">hist</code> method instead of the <code class="highlighter-rouge">plt.hist</code> function can make the code a bit easier to read.  The method also has the advantage that it discards the <code class="highlighter-rouge">NaN</code> values, by default, so it does not generate the same warnings.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gdp</span><span class="o">.</span><span class="n">hist</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_35_0.png" alt="png" /></p>
+
+<p>Now we have had a look at the GDP values, we will look at the
+values for the <code class="highlighter-rouge">mat_mort_ratio</code> column.  These are the numbers
+of women who die in childbirth for every 100,000 births.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mmr</span> <span class="o">=</span> <span class="n">gender_data</span><span class="p">[</span><span class="s">'mat_mort_ratio'</span><span class="p">]</span>
+<span class="n">mmr</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0         NaN
+1      444.00
+2      501.25
+3       29.25
+4         NaN
+5        6.00
+6       53.75
+7       27.25
+8         NaN
+9         NaN
+10       6.00
+11       4.00
+12      25.25
+13     747.25
+14       7.00
+15     417.50
+16     384.25
+17     194.75
+18      10.75
+19      15.25
+20      81.50
+21      11.75
+22       4.00
+23      29.25
+24        NaN
+25     218.25
+26      49.50
+27      28.00
+28      23.75
+29     161.75
+        ...  
+186       NaN
+187    892.25
+188    380.75
+189     21.00
+190     33.25
+191     43.50
+192    240.25
+193    129.25
+194     63.25
+195     63.25
+196     17.50
+197       NaN
+198    429.50
+199    366.50
+200     24.25
+201     15.50
+202     14.00
+203     37.00
+204     45.75
+205     97.00
+206       NaN
+207       NaN
+208     54.75
+209     82.50
+210     54.75
+211       NaN
+212    399.75
+213    143.75
+214    233.75
+215    398.00
+Name: mat_mort_ratio, Length: 216, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mmr</span><span class="o">.</span><span class="n">hist</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_38_0.png" alt="png" /></p>
+
+<p>We are interested in the relationship of <code class="highlighter-rouge">gpp</code> and <code class="highlighter-rouge">mmr</code>.  Maybe richer countries have better health care, and fewer maternal deaths.</p>
+
+<p>Here is a plot, using the standard Matplotlib <code class="highlighter-rouge">scatter</code>
+function.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">gdp</span><span class="p">,</span> <span class="n">mmr</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_40_0.png" alt="png" /></p>
+
+<p>We can do the same plot using the <code class="highlighter-rouge">plot.scatter</code> method on the data frame.  In that case, we specify the column names that should go on the x and the y axes.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s">'gdp_us_billion'</span><span class="p">,</span> <span class="s">'mat_mort_ratio'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_42_0.png" alt="png" /></p>
+
+<p>An advantage of doing it this way is that we get the column names on the x and y axes by default.</p>
+
+<h2 id="showing-the-top-5-values-with-the-head-method">Showing the top 5 values with the <code class="highlighter-rouge">head</code> method</h2>
+
+<p>We have already seen that Pandas will display the data frame with nice formatting.  If the data frame is long, it will display only the first few and the last few rows:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender_data</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aruba</td>
+      <td>ABW</td>
+      <td>1.663250</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.721939</td>
+      <td>NaN</td>
+      <td>0.103744</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>4.954500</td>
+      <td>19.961015</td>
+      <td>161.138034</td>
+      <td>2.834598</td>
+      <td>40.109708</td>
+      <td>444.00</td>
+      <td>32.715838</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>AGO</td>
+      <td>6.123000</td>
+      <td>111.936542</td>
+      <td>254.747970</td>
+      <td>2.447546</td>
+      <td>NaN</td>
+      <td>501.25</td>
+      <td>26.937545</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>1.769250</td>
+      <td>12.327586</td>
+      <td>574.202694</td>
+      <td>2.836021</td>
+      <td>47.201082</td>
+      <td>29.25</td>
+      <td>2.888280</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Andorra</td>
+      <td>AND</td>
+      <td>NaN</td>
+      <td>3.197538</td>
+      <td>4421.224933</td>
+      <td>7.260281</td>
+      <td>47.123345</td>
+      <td>NaN</td>
+      <td>0.079547</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>United Arab Emirates</td>
+      <td>ARE</td>
+      <td>1.793000</td>
+      <td>375.027082</td>
+      <td>2202.407569</td>
+      <td>2.581168</td>
+      <td>48.789260</td>
+      <td>6.00</td>
+      <td>9.080299</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Argentina</td>
+      <td>ARG</td>
+      <td>2.328000</td>
+      <td>550.980968</td>
+      <td>1148.256142</td>
+      <td>2.782216</td>
+      <td>48.915810</td>
+      <td>53.75</td>
+      <td>42.976675</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Armenia</td>
+      <td>ARM</td>
+      <td>1.545500</td>
+      <td>10.885362</td>
+      <td>348.663884</td>
+      <td>1.916016</td>
+      <td>46.782180</td>
+      <td>27.25</td>
+      <td>2.904683</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>American Samoa</td>
+      <td>ASM</td>
+      <td>NaN</td>
+      <td>0.640500</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.055422</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Antigua and Barbuda</td>
+      <td>ATG</td>
+      <td>2.082000</td>
+      <td>1.298213</td>
+      <td>1152.493656</td>
+      <td>3.676514</td>
+      <td>48.291463</td>
+      <td>NaN</td>
+      <td>0.098872</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Australia</td>
+      <td>AUS</td>
+      <td>1.861500</td>
+      <td>1422.994116</td>
+      <td>4256.058988</td>
+      <td>6.292381</td>
+      <td>48.576707</td>
+      <td>6.00</td>
+      <td>23.444560</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Austria</td>
+      <td>AUT</td>
+      <td>1.455000</td>
+      <td>407.494276</td>
+      <td>4930.298893</td>
+      <td>8.504276</td>
+      <td>48.556078</td>
+      <td>4.00</td>
+      <td>8.566294</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Azerbaijan</td>
+      <td>AZE</td>
+      <td>1.980000</td>
+      <td>62.003001</td>
+      <td>956.709718</td>
+      <td>1.197249</td>
+      <td>46.157363</td>
+      <td>25.25</td>
+      <td>9.531856</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Burundi</td>
+      <td>BDI</td>
+      <td>5.992250</td>
+      <td>2.876978</td>
+      <td>59.693830</td>
+      <td>4.433749</td>
+      <td>50.481971</td>
+      <td>747.25</td>
+      <td>9.907015</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Belgium</td>
+      <td>BEL</td>
+      <td>1.755000</td>
+      <td>494.221836</td>
+      <td>4297.838005</td>
+      <td>8.221003</td>
+      <td>48.864675</td>
+      <td>7.00</td>
+      <td>11.228495</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Benin</td>
+      <td>BEN</td>
+      <td>4.806750</td>
+      <td>8.778151</td>
+      <td>83.726190</td>
+      <td>2.206916</td>
+      <td>47.211127</td>
+      <td>417.50</td>
+      <td>10.293715</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Burkina Faso</td>
+      <td>BFA</td>
+      <td>5.564500</td>
+      <td>11.753054</td>
+      <td>87.143009</td>
+      <td>3.021246</td>
+      <td>48.217520</td>
+      <td>384.25</td>
+      <td>17.597395</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Bangladesh</td>
+      <td>BGD</td>
+      <td>2.193250</td>
+      <td>174.545099</td>
+      <td>85.968844</td>
+      <td>0.860447</td>
+      <td>50.460564</td>
+      <td>194.75</td>
+      <td>159.371214</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Bulgaria</td>
+      <td>BGR</td>
+      <td>1.510000</td>
+      <td>53.797612</td>
+      <td>1266.857003</td>
+      <td>4.243437</td>
+      <td>48.310802</td>
+      <td>10.75</td>
+      <td>7.220151</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Bahrain</td>
+      <td>BHR</td>
+      <td>2.065250</td>
+      <td>32.004011</td>
+      <td>2030.158316</td>
+      <td>2.976386</td>
+      <td>49.116838</td>
+      <td>15.25</td>
+      <td>1.349810</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bahamas, The</td>
+      <td>BHS</td>
+      <td>1.877250</td>
+      <td>8.688000</td>
+      <td>1727.128385</td>
+      <td>3.308626</td>
+      <td>NaN</td>
+      <td>81.50</td>
+      <td>0.381904</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Bosnia and Herzegovina</td>
+      <td>BIH</td>
+      <td>1.267000</td>
+      <td>17.323327</td>
+      <td>941.504655</td>
+      <td>6.841021</td>
+      <td>48.634905</td>
+      <td>11.75</td>
+      <td>3.574396</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Belarus</td>
+      <td>BLR</td>
+      <td>1.677000</td>
+      <td>64.782942</td>
+      <td>986.236757</td>
+      <td>3.876601</td>
+      <td>48.685741</td>
+      <td>4.00</td>
+      <td>9.480348</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Belize</td>
+      <td>BLZ</td>
+      <td>2.594750</td>
+      <td>1.680325</td>
+      <td>471.967465</td>
+      <td>3.744844</td>
+      <td>48.317238</td>
+      <td>29.25</td>
+      <td>0.351764</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Bermuda</td>
+      <td>BMU</td>
+      <td>1.617500</td>
+      <td>5.555624</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.423588</td>
+      <td>NaN</td>
+      <td>0.065101</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Bolivia</td>
+      <td>BOL</td>
+      <td>2.995250</td>
+      <td>31.509324</td>
+      <td>381.007594</td>
+      <td>4.192031</td>
+      <td>48.464175</td>
+      <td>218.25</td>
+      <td>10.562803</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Brazil</td>
+      <td>BRA</td>
+      <td>1.795250</td>
+      <td>2198.765606</td>
+      <td>1303.199104</td>
+      <td>3.773473</td>
+      <td>47.784577</td>
+      <td>49.50</td>
+      <td>204.159544</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Barbados</td>
+      <td>BRB</td>
+      <td>1.792250</td>
+      <td>4.413080</td>
+      <td>1062.840088</td>
+      <td>4.828680</td>
+      <td>48.878181</td>
+      <td>28.00</td>
+      <td>0.283338</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Brunei Darussalam</td>
+      <td>BRN</td>
+      <td>1.884000</td>
+      <td>15.719223</td>
+      <td>1795.924160</td>
+      <td>2.335194</td>
+      <td>48.523699</td>
+      <td>23.75</td>
+      <td>0.411581</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Bhutan</td>
+      <td>BTN</td>
+      <td>2.061250</td>
+      <td>1.975145</td>
+      <td>277.526670</td>
+      <td>2.706908</td>
+      <td>49.572296</td>
+      <td>161.75</td>
+      <td>0.775905</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>186</th>
+      <td>Turks and Caicos Islands</td>
+      <td>TCA</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.846884</td>
+      <td>NaN</td>
+      <td>0.033703</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>Chad</td>
+      <td>TCD</td>
+      <td>6.211000</td>
+      <td>11.945942</td>
+      <td>69.904561</td>
+      <td>1.725194</td>
+      <td>42.929245</td>
+      <td>892.25</td>
+      <td>13.574024</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td>Togo</td>
+      <td>TGO</td>
+      <td>4.620000</td>
+      <td>4.183610</td>
+      <td>71.263825</td>
+      <td>2.037809</td>
+      <td>48.270471</td>
+      <td>380.75</td>
+      <td>7.230904</td>
+    </tr>
+    <tr>
+      <th>189</th>
+      <td>Thailand</td>
+      <td>THA</td>
+      <td>1.516750</td>
+      <td>406.136904</td>
+      <td>581.927487</td>
+      <td>3.183842</td>
+      <td>48.213034</td>
+      <td>21.00</td>
+      <td>68.384986</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>Tajikistan</td>
+      <td>TJK</td>
+      <td>3.495750</td>
+      <td>8.036228</td>
+      <td>169.745970</td>
+      <td>1.976367</td>
+      <td>48.260680</td>
+      <td>33.25</td>
+      <td>8.363844</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <td>Turkmenistan</td>
+      <td>TKM</td>
+      <td>2.313750</td>
+      <td>37.973096</td>
+      <td>288.572644</td>
+      <td>1.349303</td>
+      <td>48.906879</td>
+      <td>43.50</td>
+      <td>5.465637</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <td>Timor-Leste</td>
+      <td>TLS</td>
+      <td>5.797750</td>
+      <td>1.361430</td>
+      <td>98.577296</td>
+      <td>1.140440</td>
+      <td>48.337367</td>
+      <td>240.25</td>
+      <td>1.212718</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>Tonga</td>
+      <td>TON</td>
+      <td>3.745750</td>
+      <td>0.439179</td>
+      <td>250.962504</td>
+      <td>3.987285</td>
+      <td>47.697931</td>
+      <td>129.25</td>
+      <td>0.105909</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Trinidad and Tobago</td>
+      <td>TTO</td>
+      <td>1.782750</td>
+      <td>24.570947</td>
+      <td>1778.148073</td>
+      <td>3.071370</td>
+      <td>NaN</td>
+      <td>63.25</td>
+      <td>1.353877</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>Tunisia</td>
+      <td>TUN</td>
+      <td>2.140000</td>
+      <td>44.824374</td>
+      <td>782.950522</td>
+      <td>4.118771</td>
+      <td>48.142132</td>
+      <td>63.25</td>
+      <td>11.144409</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>Turkey</td>
+      <td>TUR</td>
+      <td>2.078000</td>
+      <td>895.175577</td>
+      <td>997.374772</td>
+      <td>4.189521</td>
+      <td>48.789477</td>
+      <td>17.50</td>
+      <td>77.034345</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Tuvalu</td>
+      <td>TUV</td>
+      <td>NaN</td>
+      <td>0.036470</td>
+      <td>563.500592</td>
+      <td>15.506929</td>
+      <td>47.472414</td>
+      <td>NaN</td>
+      <td>0.010910</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>Tanzania</td>
+      <td>TZA</td>
+      <td>5.181250</td>
+      <td>44.935542</td>
+      <td>131.704162</td>
+      <td>2.648609</td>
+      <td>50.666580</td>
+      <td>429.50</td>
+      <td>52.281324</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>Uganda</td>
+      <td>UGA</td>
+      <td>5.822500</td>
+      <td>25.941461</td>
+      <td>132.892684</td>
+      <td>2.014349</td>
+      <td>50.099485</td>
+      <td>366.50</td>
+      <td>38.865339</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>Ukraine</td>
+      <td>UKR</td>
+      <td>1.510250</td>
+      <td>135.379275</td>
+      <td>628.579254</td>
+      <td>3.960185</td>
+      <td>48.984198</td>
+      <td>24.25</td>
+      <td>45.302704</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>Uruguay</td>
+      <td>URY</td>
+      <td>2.027000</td>
+      <td>54.345132</td>
+      <td>1721.507752</td>
+      <td>6.044403</td>
+      <td>48.295555</td>
+      <td>15.50</td>
+      <td>3.419977</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1.860875</td>
+      <td>17369.124600</td>
+      <td>9060.068657</td>
+      <td>8.121961</td>
+      <td>48.758830</td>
+      <td>14.00</td>
+      <td>318.558175</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>Uzbekistan</td>
+      <td>UZB</td>
+      <td>2.372750</td>
+      <td>61.340649</td>
+      <td>334.476754</td>
+      <td>3.118842</td>
+      <td>48.387434</td>
+      <td>37.00</td>
+      <td>30.784500</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>St. Vincent and the Grenadines</td>
+      <td>VCT</td>
+      <td>1.986000</td>
+      <td>0.730107</td>
+      <td>775.803386</td>
+      <td>4.365757</td>
+      <td>48.536415</td>
+      <td>45.75</td>
+      <td>0.109421</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td>Venezuela, RB</td>
+      <td>VEN</td>
+      <td>2.378250</td>
+      <td>376.146268</td>
+      <td>896.815314</td>
+      <td>1.587088</td>
+      <td>48.400934</td>
+      <td>97.00</td>
+      <td>30.734524</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>British Virgin Islands</td>
+      <td>VGB</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>47.581520</td>
+      <td>NaN</td>
+      <td>0.029585</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>Virgin Islands (U.S.)</td>
+      <td>VIR</td>
+      <td>1.760000</td>
+      <td>3.812000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.104141</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>Vietnam</td>
+      <td>VNM</td>
+      <td>1.959500</td>
+      <td>181.820736</td>
+      <td>368.374550</td>
+      <td>3.779501</td>
+      <td>48.021053</td>
+      <td>54.75</td>
+      <td>90.742400</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>Vanuatu</td>
+      <td>VUT</td>
+      <td>3.364750</td>
+      <td>0.782876</td>
+      <td>125.568712</td>
+      <td>3.689874</td>
+      <td>47.301617</td>
+      <td>82.50</td>
+      <td>0.258896</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>Samoa</td>
+      <td>WSM</td>
+      <td>4.118250</td>
+      <td>0.799887</td>
+      <td>366.353096</td>
+      <td>5.697059</td>
+      <td>48.350049</td>
+      <td>54.75</td>
+      <td>0.192225</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>Kosovo</td>
+      <td>XKX</td>
+      <td>2.142500</td>
+      <td>6.804620</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.813820</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>Yemen, Rep.</td>
+      <td>YEM</td>
+      <td>4.225750</td>
+      <td>36.819337</td>
+      <td>207.949700</td>
+      <td>1.417836</td>
+      <td>44.470076</td>
+      <td>399.75</td>
+      <td>26.246608</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>South Africa</td>
+      <td>ZAF</td>
+      <td>2.375250</td>
+      <td>345.209888</td>
+      <td>1123.142656</td>
+      <td>4.241441</td>
+      <td>48.516298</td>
+      <td>143.75</td>
+      <td>54.177209</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>5.394250</td>
+      <td>24.280990</td>
+      <td>185.556359</td>
+      <td>2.687290</td>
+      <td>49.934484</td>
+      <td>233.75</td>
+      <td>15.633220</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>3.943000</td>
+      <td>15.495514</td>
+      <td>115.519881</td>
+      <td>2.695188</td>
+      <td>49.529875</td>
+      <td>398.00</td>
+      <td>15.420964</td>
+    </tr>
+  </tbody>
+</table>
+<p>216 rows × 9 columns</p>
+</div>
+</div>
+
+<p>Notice the <code class="highlighter-rouge">...</code> in the center of this listing, to show that it has not printed some rows.</p>
+
+<p>Sometimes we do not want to see all these rows, but only - say - the top five rows.   The <code class="highlighter-rouge">head</code> method of the data frame is a useful way to do this:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gender_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aruba</td>
+      <td>ABW</td>
+      <td>1.66325</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.721939</td>
+      <td>NaN</td>
+      <td>0.103744</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>4.95450</td>
+      <td>19.961015</td>
+      <td>161.138034</td>
+      <td>2.834598</td>
+      <td>40.109708</td>
+      <td>444.00</td>
+      <td>32.715838</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>AGO</td>
+      <td>6.12300</td>
+      <td>111.936542</td>
+      <td>254.747970</td>
+      <td>2.447546</td>
+      <td>NaN</td>
+      <td>501.25</td>
+      <td>26.937545</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>1.76925</td>
+      <td>12.327586</td>
+      <td>574.202694</td>
+      <td>2.836021</td>
+      <td>47.201082</td>
+      <td>29.25</td>
+      <td>2.888280</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Andorra</td>
+      <td>AND</td>
+      <td>NaN</td>
+      <td>3.197538</td>
+      <td>4421.224933</td>
+      <td>7.260281</td>
+      <td>47.123345</td>
+      <td>NaN</td>
+      <td>0.079547</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<p>The <code class="highlighter-rouge">Series</code> also has a <code class="highlighter-rouge">head</code> method, that does the same thing:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gdp</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0           NaN
+1     19.961015
+2    111.936542
+3     12.327586
+4      3.197538
+Name: gdp_us_billion, dtype: float64
+</code></pre></div></div>
+
+<h2 id="selecting-rows">Selecting rows</h2>
+
+<p>We often want to select rows from the data frame that match some criterion.</p>
+
+<p>Say we want to select the rows corresponding the countries with a high GDP.</p>
+
+<p>Looking at the histogram of <code class="highlighter-rouge">gdp</code> above, we could try this as a threshold to
+identify high GDP countries.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">high_gdp</span> <span class="o">=</span> <span class="n">gdp</span> <span class="o">&gt;</span> <span class="mi">1000</span>
+<span class="n">high_gdp</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0    False
+1    False
+2    False
+3    False
+4    False
+Name: gdp_us_billion, dtype: bool
+</code></pre></div></div>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">type</span><span class="p">(</span><span class="n">high_gdp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.core.series.Series
+</code></pre></div></div>
+
+<p>Notice that <code class="highlighter-rouge">high_gdp</code> is a Boolean series, like the Boolean arrays you have
+already seen.  It has <code class="highlighter-rouge">True</code> for elements corresponding to countries with <code class="highlighter-rouge">gdp</code>
+value greater than <code class="highlighter-rouge">1000</code> and <code class="highlighter-rouge">False</code> otherwise.</p>
+
+<p>We can use this Boolean series to select rows from the data frame.</p>
+
+<p>Remember <em>indexing</em>.  When we follow a name of something, like an array or
+series or data frame, with an open square bracket, this means we are trying to
+get data from the array or Series.  The stuff inside the square brackets says
+what we want.</p>
+
+<p>When we put our Boolean series inside the square brackets, it works like this:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_gender_data</span> <span class="o">=</span> <span class="n">gender_data</span><span class="p">[</span><span class="n">high_gdp</span><span class="p">]</span>
+<span class="n">rich_gender_data</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>Australia</td>
+      <td>AUS</td>
+      <td>1.861500</td>
+      <td>1422.994116</td>
+      <td>4256.058988</td>
+      <td>6.292381</td>
+      <td>48.576707</td>
+      <td>6.00</td>
+      <td>23.444560</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Brazil</td>
+      <td>BRA</td>
+      <td>1.795250</td>
+      <td>2198.765606</td>
+      <td>1303.199104</td>
+      <td>3.773473</td>
+      <td>47.784577</td>
+      <td>49.50</td>
+      <td>204.159544</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Canada</td>
+      <td>CAN</td>
+      <td>1.600300</td>
+      <td>1708.473627</td>
+      <td>4616.539134</td>
+      <td>7.546247</td>
+      <td>48.808926</td>
+      <td>7.25</td>
+      <td>35.517119</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>CHN</td>
+      <td>1.558750</td>
+      <td>10182.790479</td>
+      <td>657.748859</td>
+      <td>3.015530</td>
+      <td>46.297964</td>
+      <td>28.75</td>
+      <td>1364.446000</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Germany</td>
+      <td>DEU</td>
+      <td>1.450000</td>
+      <td>3601.226158</td>
+      <td>4909.659884</td>
+      <td>8.542615</td>
+      <td>48.568695</td>
+      <td>6.25</td>
+      <td>81.281645</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Spain</td>
+      <td>ESP</td>
+      <td>1.307500</td>
+      <td>1299.724261</td>
+      <td>2963.832825</td>
+      <td>6.545739</td>
+      <td>48.722231</td>
+      <td>5.00</td>
+      <td>46.553128</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>France</td>
+      <td>FRA</td>
+      <td>2.005000</td>
+      <td>2647.649725</td>
+      <td>4387.835406</td>
+      <td>8.920420</td>
+      <td>48.772050</td>
+      <td>8.75</td>
+      <td>66.302099</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>United Kingdom</td>
+      <td>GBR</td>
+      <td>1.842500</td>
+      <td>2768.864417</td>
+      <td>3357.983675</td>
+      <td>7.720655</td>
+      <td>48.791809</td>
+      <td>9.25</td>
+      <td>64.641557</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>India</td>
+      <td>IND</td>
+      <td>2.449250</td>
+      <td>2019.005411</td>
+      <td>241.572477</td>
+      <td>1.292666</td>
+      <td>49.497234</td>
+      <td>185.25</td>
+      <td>1293.742537</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>Italy</td>
+      <td>ITA</td>
+      <td>1.390000</td>
+      <td>2005.983980</td>
+      <td>3266.984094</td>
+      <td>6.984374</td>
+      <td>48.407573</td>
+      <td>4.00</td>
+      <td>60.378795</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Japan</td>
+      <td>JPN</td>
+      <td>1.430000</td>
+      <td>5106.024760</td>
+      <td>3687.126279</td>
+      <td>8.496074</td>
+      <td>48.744199</td>
+      <td>5.75</td>
+      <td>127.297102</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Korea, Rep.</td>
+      <td>KOR</td>
+      <td>1.232000</td>
+      <td>1346.751162</td>
+      <td>2385.447251</td>
+      <td>3.915606</td>
+      <td>48.023388</td>
+      <td>12.00</td>
+      <td>50.727212</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Mexico</td>
+      <td>MEX</td>
+      <td>2.257000</td>
+      <td>1188.802780</td>
+      <td>1081.208948</td>
+      <td>3.225839</td>
+      <td>48.906296</td>
+      <td>40.00</td>
+      <td>124.203450</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Russian Federation</td>
+      <td>RUS</td>
+      <td>1.724500</td>
+      <td>1822.691700</td>
+      <td>1755.506635</td>
+      <td>3.731354</td>
+      <td>48.968070</td>
+      <td>25.25</td>
+      <td>143.793504</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1.860875</td>
+      <td>17369.124600</td>
+      <td>9060.068657</td>
+      <td>8.121961</td>
+      <td>48.758830</td>
+      <td>14.00</td>
+      <td>318.558175</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">type</span><span class="p">(</span><span class="n">rich_gender_data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.core.frame.DataFrame
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">rich_gender_data</code> is a new data frame, that is a subset of the original
+<code class="highlighter-rouge">gender_data</code> frame.  It contains only the rows where the GDP value is greater
+than <code class="highlighter-rouge">1000</code> billion dollars.  Check the display of <code class="highlighter-rouge">rich_gender_data</code> above to
+confirm that the values in the <code class="highlighter-rouge">gdp_us_billion</code> column are all greater than
+<code class="highlighter-rouge">1000</code>.</p>
+
+<p>We can do a scatter plot of GDP values against maternal
+mortality rate, and we find, oddly, that for rich countries,
+there is little relationship between GDP and maternal mortality.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_gender_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s">'gdp_us_billion'</span><span class="p">,</span> <span class="s">'mat_mort_ratio'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1150beb90&gt;
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_60_1.png" alt="png" /></p>
+
+<p>One thing that stands out is the very high value at around 180.   Which country does this refer to?  We can use sorting to find out.</p>
+
+<h2 id="sorting-data-frames">Sorting data frames</h2>
+
+<p>Data frames have a method <code class="highlighter-rouge">sort_value</code>.  This returns a new data frame with the
+rows sorted by the values in the column we specify.</p>
+
+<p>Here are the first five rows of the data frame of the rich countries:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_gender_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>Australia</td>
+      <td>AUS</td>
+      <td>1.86150</td>
+      <td>1422.994116</td>
+      <td>4256.058988</td>
+      <td>6.292381</td>
+      <td>48.576707</td>
+      <td>6.00</td>
+      <td>23.444560</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Brazil</td>
+      <td>BRA</td>
+      <td>1.79525</td>
+      <td>2198.765606</td>
+      <td>1303.199104</td>
+      <td>3.773473</td>
+      <td>47.784577</td>
+      <td>49.50</td>
+      <td>204.159544</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Canada</td>
+      <td>CAN</td>
+      <td>1.60030</td>
+      <td>1708.473627</td>
+      <td>4616.539134</td>
+      <td>7.546247</td>
+      <td>48.808926</td>
+      <td>7.25</td>
+      <td>35.517119</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>CHN</td>
+      <td>1.55875</td>
+      <td>10182.790479</td>
+      <td>657.748859</td>
+      <td>3.015530</td>
+      <td>46.297964</td>
+      <td>28.75</td>
+      <td>1364.446000</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Germany</td>
+      <td>DEU</td>
+      <td>1.45000</td>
+      <td>3601.226158</td>
+      <td>4909.659884</td>
+      <td>8.542615</td>
+      <td>48.568695</td>
+      <td>6.25</td>
+      <td>81.281645</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<p>We are interested to find which of these richer countries has a high maternal mortality ratio.  To do this, we can make a new data frame where the rows are sorted by the values in the
+<code class="highlighter-rouge">mat_mort_ratio</code> column:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_by_mmr</span> <span class="o">=</span> <span class="n">rich_gender_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'mat_mort_ratio'</span><span class="p">)</span>
+<span class="n">rich_by_mmr</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>94</th>
+      <td>Italy</td>
+      <td>ITA</td>
+      <td>1.3900</td>
+      <td>2005.983980</td>
+      <td>3266.984094</td>
+      <td>6.984374</td>
+      <td>48.407573</td>
+      <td>4.00</td>
+      <td>60.378795</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Spain</td>
+      <td>ESP</td>
+      <td>1.3075</td>
+      <td>1299.724261</td>
+      <td>2963.832825</td>
+      <td>6.545739</td>
+      <td>48.722231</td>
+      <td>5.00</td>
+      <td>46.553128</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Japan</td>
+      <td>JPN</td>
+      <td>1.4300</td>
+      <td>5106.024760</td>
+      <td>3687.126279</td>
+      <td>8.496074</td>
+      <td>48.744199</td>
+      <td>5.75</td>
+      <td>127.297102</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Australia</td>
+      <td>AUS</td>
+      <td>1.8615</td>
+      <td>1422.994116</td>
+      <td>4256.058988</td>
+      <td>6.292381</td>
+      <td>48.576707</td>
+      <td>6.00</td>
+      <td>23.444560</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Germany</td>
+      <td>DEU</td>
+      <td>1.4500</td>
+      <td>3601.226158</td>
+      <td>4909.659884</td>
+      <td>8.542615</td>
+      <td>48.568695</td>
+      <td>6.25</td>
+      <td>81.281645</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<p>Notice that the rows are in <em>ascending</em> order of <code class="highlighter-rouge">mat_mort_ratio</code>.  To find the countries with high maternal mortality, we might prefer to sort in <em>descending</em> order.  As usual you can explore how
+you might do this by looking at the help for the <code class="highlighter-rouge">sort_values</code> method with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rich_by_mmr.sort_values?
+</code></pre></div></div>
+
+<p>in a new cell.   If you do that, you discover the <code class="highlighter-rouge">ascending</code> argument, that
+you can use like this:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_by_descending_mmr</span> <span class="o">=</span> <span class="n">rich_gender_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'mat_mort_ratio'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">rich_by_descending_mmr</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>88</th>
+      <td>India</td>
+      <td>IND</td>
+      <td>2.44925</td>
+      <td>2019.005411</td>
+      <td>241.572477</td>
+      <td>1.292666</td>
+      <td>49.497234</td>
+      <td>185.25</td>
+      <td>1293.742537</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Brazil</td>
+      <td>BRA</td>
+      <td>1.79525</td>
+      <td>2198.765606</td>
+      <td>1303.199104</td>
+      <td>3.773473</td>
+      <td>47.784577</td>
+      <td>49.50</td>
+      <td>204.159544</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Mexico</td>
+      <td>MEX</td>
+      <td>2.25700</td>
+      <td>1188.802780</td>
+      <td>1081.208948</td>
+      <td>3.225839</td>
+      <td>48.906296</td>
+      <td>40.00</td>
+      <td>124.203450</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>China</td>
+      <td>CHN</td>
+      <td>1.55875</td>
+      <td>10182.790479</td>
+      <td>657.748859</td>
+      <td>3.015530</td>
+      <td>46.297964</td>
+      <td>28.75</td>
+      <td>1364.446000</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Russian Federation</td>
+      <td>RUS</td>
+      <td>1.72450</td>
+      <td>1822.691700</td>
+      <td>1755.506635</td>
+      <td>3.731354</td>
+      <td>48.968070</td>
+      <td>25.25</td>
+      <td>143.793504</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<p>As you might have guessed by now, <code class="highlighter-rouge">Series</code> also have a <code class="highlighter-rouge">sort_values</code> method.
+For a Series, you don’t have to specify the column to sort from, because you
+are using the Series values.</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_mmr</span> <span class="o">=</span> <span class="n">rich_gender_data</span><span class="p">[</span><span class="s">'mat_mort_ratio'</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">rich_mmr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.core.series.Series
+</code></pre></div></div>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_mmr</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>88     185.25
+26      49.50
+124     40.00
+35      28.75
+164     25.25
+202     14.00
+104     12.00
+67       9.25
+63       8.75
+32       7.25
+49       6.25
+10       6.00
+97       5.75
+58       5.00
+94       4.00
+Name: mat_mort_ratio, dtype: float64
+</code></pre></div></div>
+
+<h2 id="calculation-on-data-frames">Calculation on data frames</h2>
+
+<p>We can calculate with Pandas Series, just as we can with arrays.</p>
+
+<p>For example, now we know that India has both a high GDP, and a high maternal mortality ratio, we wonder whether this is because India also has a large population, and therefore, relatively little money per person to spend on health care.</p>
+
+<p>So, we would like know the GDP per capita.  Luckily the data frame as a column “population”:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_population</span> <span class="o">=</span> <span class="n">rich_by_descending_mmr</span><span class="p">[</span><span class="s">"population"</span><span class="p">]</span>
+<span class="n">rich_population</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>88     1293.742537
+26      204.159544
+124     124.203450
+35     1364.446000
+164     143.793504
+202     318.558175
+104      50.727212
+67       64.641557
+63       66.302099
+32       35.517119
+49       81.281645
+10       23.444560
+97      127.297102
+58       46.553128
+94       60.378795
+Name: population, dtype: float64
+</code></pre></div></div>
+
+<p>We can divide the GDP by the population in millions to get US billion dollars per million population.</p>
+
+<p>This works exactly as it does for arrays:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rich_gdp</span> <span class="o">=</span> <span class="n">rich_by_descending_mmr</span><span class="p">[</span><span class="s">"gdp_us_billion"</span><span class="p">]</span>
+<span class="n">rich_gdp</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>88      2019.005411
+26      2198.765606
+124     1188.802780
+35     10182.790479
+164     1822.691700
+202    17369.124600
+104     1346.751162
+67      2768.864417
+63      2647.649725
+32      1708.473627
+49      3601.226158
+10      1422.994116
+97      5106.024760
+58      1299.724261
+94      2005.983980
+Name: gdp_us_billion, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gdp_per_million</span> <span class="o">=</span> <span class="n">rich_gdp</span> <span class="o">/</span> <span class="n">rich_population</span>
+<span class="n">gdp_per_million</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>88      1.560593
+26     10.769840
+124     9.571415
+35      7.462949
+164    12.675758
+202    54.524184
+104    26.548890
+67     42.834123
+63     39.933121
+32     48.102821
+49     44.305528
+10     60.696133
+97     40.111084
+58     27.919161
+94     33.223319
+dtype: float64
+</code></pre></div></div>
+
+<p>Notice that the result is <em>elementwise</em> division, that is Python divides
+each element in <code class="highlighter-rouge">rich_gdp</code> by the <em>corresponding</em> element in
+<code class="highlighter-rouge">rich_population</code>.</p>
+
+<p>Remember that India is the first country in the <code class="highlighter-rouge">rich_by_descending_mmr</code>
+data frame.  It also has by far the lowest GDP per million population of
+any of this selection of rich countries.   Here’s a plot of
+<code class="highlighter-rouge">gdp_per_million</code> against the corresponding values in <code class="highlighter-rouge">mat_mort_ratio</code>:</p>
+
+<div class="language-python input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">gdp_per_million</span><span class="p">,</span> <span class="n">rich_by_descending_mmr</span><span class="p">[</span><span class="s">'mat_mort_ratio'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="output_data_text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.collections.PathCollection at 0x114251dd0&gt;
+</code></pre></div></div>
+
+<p><img src="../../images/chapters/04/data_frame_intro_80_1.png" alt="png" /></p>
+
+<p>It does look as if low income per person predisposes to high maternal mortality.</p>
+
+          
+        </section>
+
+        <footer class="page__meta">
+          
+          
+
+
+        </footer>
+
+        
+
+        
+  <nav class="pagination">
+    
+      <a href="/cfd-uob/chapters/04/data_frames" class="pagination--pager" title="
+  Data frames
+
+">Previous</a>
+    
+    
+      <a href="/cfd-uob/chapters/04/df_series_arrays" class="pagination--pager" title="4.2 Data frames, Series and arrays
+">Next</a>
+    
+  </nav>
+
+
+      </div>
+
+      
+    </article>
+  </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    
+
+    
+  <script src="/cfd-uob/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+
+
+<script src="/cfd-uob/assets/js/lunr/lunr.min.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-store.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- Custom scripts to load after site JS is loaded -->
+
+    <!-- Custom HTML used for the textbooks -->
+<!-- Configure, then load MathJax -->
+<script type="text/javascript">
+  window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      processEnvironments: true
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// --- To auto-embed hub URLs in interact links if given in a RESTful fashion ---
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return jQuery.param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = $("a").each(function() {
+    var href = this.href;
+    // If the link is an internal link...
+    if (href.search("https://matthew-brett.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + jQuery.param(params);
+      this.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+  // Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = $("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          if ('jupyterhub' == 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("https://oubhub.org", hubUrl);
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          $("a.interact-button").after($('<div class="interact-context">on ' + hubUrlNoHttp + '</div>'));
+
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+// --- Highlight the part of sidebar for current page ---
+
+// helper to replace trailing slash
+function replaceSlash(string)
+{
+    return string.replace(/\/$/, "");
+}
+
+// Add a class to the current page in the sidebar
+function highlightSidebarCurrentPage()
+{
+  var currentpage = location.href;
+  var links = $('.sidebar .nav__items a');
+  var ii = 0;
+  for(ii; ii < links.length; ii++) {
+    var link = links[ii];
+    if(replaceSlash(link.href) == replaceSlash(currentpage)) {
+      // Add CSS for styling
+      link.classList.add("current");
+      // Scroll to this element
+      $('div.sidebar').scrollTop(link.offsetTop - 300);
+    }
+  }
+}
+
+// --- Set up copy/paste for code blocks ---
+function addCopyButtonToCode(){
+  // get all <code> elements
+  var allCodeBlocksElements = $( "div.input_area code, div.highlighter-rouge code" );
+
+  allCodeBlocksElements.each(function(ii) {
+   	// add different id for each code block
+
+  	// target
+    var currentId = "codeblock" + (ii + 1);
+    $(this).attr('id', currentId);
+
+    //trigger
+    var clipButton = '<button class="btn copybtn" data-clipboard-target="#' + currentId + '"><img src="https://clipboardjs.com/assets/images/clippy.svg" width="13" alt="Copy to clipboard"></button>';
+       $(this).after(clipButton);
+    });
+
+    new Clipboard('.btn');
+}
+
+// Run scripts when page is loaded
+$(document).ready(function () {
+  // Add anchors to H1 etc links
+  anchors.add();
+  // Highlight current page in sidebar
+  highlightSidebarCurrentPage();
+  // Add copy button to code blocks
+  addCopyButtonToCode();
+  // Update the Interact link if a REST param given
+  updateInteractLink();
+});
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Background reading - Coding for Data - 2020 edition</title>
+<meta name="description" content="">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_UK">
+<meta property="og:site_name" content="Coding for Data - 2020 edition">
+<meta property="og:title" content="Coding for Data - 2020 edition">
+<meta property="og:url" content="https://matthew-brett.github.io/cfd-uob/notebooks/07/booleans_and_labels.Rmd">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://matthew-brett.github.io/cfd-uob/notebooks/07/booleans_and_labels.Rmd">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Matthew Brett",
+      "url": "https://matthew-brett.github.io/cfd-uob",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/cfd-uob/feed.xml" type="application/atom+xml" rel="alternate" title="Coding for Data - 2020 edition Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/cfd-uob/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+
+<!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/cfd-uob/assets/css/notebook-markdown.css">
+    <link rel="stylesheet" href="/cfd-uob/assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/cfd-uob/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js"></script>
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/cfd-uob/">
+          <img src="/cfd-uob/images/dsfe_logo.png" class="masthead_logo" />
+          Coding for Data - 2020 edition
+        </a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/about" >About</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/syllabus" >Syllabus</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/classes" >Classes</a>
+            </li>
+          
+          
+            <li class="masthead__menu-item">
+              <a href="/cfd-uob/chapters/01/intro">Textbook</a>
+            </li>
+          
+          
+            <li class="masthead__menu-item">
+              <a href="https://oubhub.org">JupyterHub</a>
+            </li>
+          
+        </ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <!--  -->
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        We have already used Boolean series to index data frames and other series.
+
+This page gives a little more details about how that works, in order to explain
+some subtleties in results.
+
+
+We return to the World Bank statistics on development and gender in
+[gender_stats.csv](/cfd-uob/data/gender_stats.csv).
+
+Download that file to the same directory as this notebook, if you are running
+on your own computer.
+
+Here we pull out the rows for the countries with the highest Gross Domestic
+Product. This may be familiar from the [data frame intro](/cfd-uobchapters/03/data_frame_intro) and the [Pandas indexing page](/cfd-uobchapters/07/pandas_indexing).
+
+
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+```{python}
+# Load the data file as a data frame.
+gender_data = pd.read_csv('gender_stats.csv')
+
+# Sort by GDP.
+df_by_gdp = gender_data.sort_values('gdp_us_billion', ascending=False)
+# Take the top 5 rows.
+richest_5 = df_by_gdp.head(5)
+richest_5
+```
+
+Consider the index (row labels) of this 5-row data frame:
+
+```{python}
+richest_5.index
+```
+
+Now let us say we want to select some of these rows with Boolean indexing. Here
+is a Boolean series with True for rows where `health_exp_per_cap` is greater
+than 3500 dollars, False otherwise.
+
+```{python}
+# Create a Boolean series with True for big spender rows, False otherwise.
+is_big_spender = richest_5['health_exp_per_cap'] > 3500
+is_big_spender
+```
+
+Notice that this Series, like all Series, has an index, which is the same as
+the index from the Series we used to make it
+(`richest_5['health_exp_per_cap']`), and therefore, the same as the index for
+the data frame (`richest_5`).
+
+```{python}
+is_big_spender.index
+```
+
+Let's say we are interested in the `country_name` for countries spending more
+than 3500 dollars per capita on health care.  We can do this with, for example,
+`loc`:
+
+```{python}
+richest_5.loc[is_big_spender, 'country_name']
+```
+
+`loc` gives us the rows for which *corresponding* elements in  `is_big_spender`
+are True.
+
+But what does *corresponding* mean?   Does it mean corresponding in terms of
+position?   Or in terms of index (row / element labels)?
+
+Here's the Boolean series again:
+
+```{python}
+is_big_spender
+```
+
+If *corresponding* means corresponding in terms of *position* then we would
+take the first row of `richest_5` (because the first element in
+`is_big_spender` is True) but not the second row (because the second element in
+`is_big_spender` is False) and so on.
+
+If *corresponding* means corresponding in terms of *labels* then we would take
+the row from `richest_5` with label 202 (because the element labeled 202 in
+`is_big_spender` is True), but we do not take the row labeled 35 (because the
+element labeled 35 in `is_big_spender` is False), and so on.
+
+
+We cannot distinguish between these alternatives at the moment, because the
+order of the labels is the same in the data frame `richest_5` and the series
+`is_big_spender`, so *positions* and *labels* will give the same answer.
+
+
+We can distinguish when the order of the labels is not the same in the Boolean
+series and the data frame.  For example, we can sort the series, like this:
+
+```{python}
+sorted_is_big_spender = is_big_spender.sort_values()
+sorted_is_big_spender
+```
+
+Now the order of the row labels is different in the series (above) and the data
+frame (below):
+
+```{python}
+richest_5.index
+```
+
+If we index with this sorted series, and indexing uses the *position* of the
+True and False values, we would expect to see the last three rows, because the
+values in the last three positions are True (and the others are False).
+
+If indexing uses *labels*, then we expect to get the same answer we got before,
+because the relationship between the True / False values and labels hasn't
+changed - the elements labeled 202, 97 and 49 have True values, so we expect to
+see those rows in the result.  So (drum roll):
+
+```{python}
+richest_5.loc[sorted_is_big_spender, 'country_name']
+```
+
+The result is the same as for the not-sorted series - and we have found that
+`loc` indexing uses the *labels* rather than the *positions* when indexing with
+a Boolean series.
+
+On reflection, maybe that is not surprising - after all, [we already
+know](pandas_indexing) that `loc` indexing does indexing by *label*.
+
+
+We usually will not have to worry about the difference between labels and
+positions in Boolean Series, because, usually, the row labels and positions are
+the same in the thing we index (data frame, or Series) and the Boolean series
+we use for indexing.  This was the case at the top of this page, and in all
+previous times you have seen Boolean indexing on data frames or series.
+
+
+## What about iloc?
+
+
+`iloc` does indexing by *position* - so what approach does `iloc` take to the
+labels on a Boolean series?
+
+We guess that `iloc` does not use the labels on a Boolean series, but what does
+it do?  Does it throw away the labels and just look at the positions of the
+True and False values?  Or something else?
+
+```{python tags=c("raises-exception")}
+# iloc indexing with a Boolean series.
+# The 'country_name' column is the first column,
+# so it is at offset 0 in the columns.
+richest_5.iloc[sorted_is_big_spender, 0]
+```
+
+It does something else - it gives an error, telling us that it will not use the
+index.   This is so whatever the index order - even if the index and the
+positions give the same answer:
+
+```{python tags=c("raises-exception")}
+# iloc with the original Boolean series, where positions
+# and labels match.
+richest_5.iloc[is_big_spender, 0]
+```
+
+If you want to use Boolean indexing with `iloc`, you can use a Boolean sequence
+without row / element labels, such as a Numpy array.  We can achieve that by
+converting the Boolean Series to a Numpy array, and therefore, throwing away
+the index (element labels):
+
+```{python}
+sorted_is_big_spender_arr = np.array(sorted_is_big_spender)
+sorted_is_big_spender_arr
+```
+
+This Boolean sequence will work with `iloc`, because it has no index (element
+labels) to trip it up:
+
+```{python}
+# You can use a Boolean array to index rows, with "iloc".
+richest_5.iloc[sorted_is_big_spender_arr, 0]
+```
+
+Notice this does gives us the rows where the matching *position* has True.
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    
+
+    
+  <script src="/cfd-uob/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+
+
+<script src="/cfd-uob/assets/js/lunr/lunr.min.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-store.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- Custom scripts to load after site JS is loaded -->
+
+    <!-- Custom HTML used for the textbooks -->
+<!-- Configure, then load MathJax -->
+<script type="text/javascript">
+  window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      processEnvironments: true
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// --- To auto-embed hub URLs in interact links if given in a RESTful fashion ---
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return jQuery.param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = $("a").each(function() {
+    var href = this.href;
+    // If the link is an internal link...
+    if (href.search("https://matthew-brett.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + jQuery.param(params);
+      this.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+  // Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = $("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          if ('jupyterhub' == 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("https://oubhub.org", hubUrl);
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          $("a.interact-button").after($('<div class="interact-context">on ' + hubUrlNoHttp + '</div>'));
+
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+// --- Highlight the part of sidebar for current page ---
+
+// helper to replace trailing slash
+function replaceSlash(string)
+{
+    return string.replace(/\/$/, "");
+}
+
+// Add a class to the current page in the sidebar
+function highlightSidebarCurrentPage()
+{
+  var currentpage = location.href;
+  var links = $('.sidebar .nav__items a');
+  var ii = 0;
+  for(ii; ii < links.length; ii++) {
+    var link = links[ii];
+    if(replaceSlash(link.href) == replaceSlash(currentpage)) {
+      // Add CSS for styling
+      link.classList.add("current");
+      // Scroll to this element
+      $('div.sidebar').scrollTop(link.offsetTop - 300);
+    }
+  }
+}
+
+// --- Set up copy/paste for code blocks ---
+function addCopyButtonToCode(){
+  // get all <code> elements
+  var allCodeBlocksElements = $( "div.input_area code, div.highlighter-rouge code" );
+
+  allCodeBlocksElements.each(function(ii) {
+   	// add different id for each code block
+
+  	// target
+    var currentId = "codeblock" + (ii + 1);
+    $(this).attr('id', currentId);
+
+    //trigger
+    var clipButton = '<button class="btn copybtn" data-clipboard-target="#' + currentId + '"><img src="https://clipboardjs.com/assets/images/clippy.svg" width="13" alt="Copy to clipboard"></button>';
+       $(this).after(clipButton);
+    });
+
+    new Clipboard('.btn');
+}
+
+// Run scripts when page is loaded
+$(document).ready(function () {
+  // Add anchors to H1 etc links
+  anchors.add();
+  // Highlight current page in sidebar
+  highlightSidebarCurrentPage();
+  // Add copy button to code blocks
+  addCopyButtonToCode();
+  // Update the Interact link if a REST param given
+  updateInteractLink();
+});
+</script>
+
+  </body>
+</html>

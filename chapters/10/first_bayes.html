@@ -1,0 +1,1598 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>9.2 Reverse probability - Coding for Data - 2020 edition</title>
+<meta name="description" content="In the problem for the education minister we had a sample of fast-track-marked exams from2019, and we found that the mean mark was about 65.25.  We wondered what wecould say about the eventual  when we have the marks for all 8000 or sostudents.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_UK">
+<meta property="og:site_name" content="Coding for Data - 2020 edition">
+<meta property="og:title" content="9.2 Reverse probability">
+<meta property="og:url" content="https://matthew-brett.github.io/cfd-uob/chapters/10/first_bayes">
+
+
+  <meta property="og:description" content="In the problem for the education minister we had a sample of fast-track-marked exams from2019, and we found that the mean mark was about 65.25.  We wondered what wecould say about the eventual  when we have the marks for all 8000 or sostudents.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-08-14T11:44:36+01:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://matthew-brett.github.io/cfd-uob/chapters/10/first_bayes">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Matthew Brett",
+      "url": "https://matthew-brett.github.io/cfd-uob",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/cfd-uob/feed.xml" type="application/atom+xml" rel="alternate" title="Coding for Data - 2020 edition Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/cfd-uob/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+
+<!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/cfd-uob/assets/css/notebook-markdown.css">
+    <link rel="stylesheet" href="/cfd-uob/assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/cfd-uob/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js"></script>
+  </head>
+
+  <body class="layout--textbook">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" class="textbook" role="main">
+  <div id="textbook_wrapper">
+    
+  <div class="sidebar sticky textbook">
+  
+  
+    <img src="/cfd-uob/images/dsfe_logo.png" class="textbook_logo" />
+    
+
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/"><span class="nav__sub-title">Home</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/01/intro"><span class="nav__sub-title">1. Coding for data</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/what-is-data-science" class="level_1">1.1 What is data science?</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/why-data-science" class="level_1">1.2 Why data science?</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/tools_techniques" class="level_1">1.3 Tools and techniques</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/computational-tools" class="level_2">1.3.1 Computational tools</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/statistical-techniques" class="level_2">1.3.2 Statistical techniques</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/Plotting_the_Classics" class="level_1">1.4 Plotting the classics</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/Literary_Characters" class="level_2">1.4.1 Literary characters</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/Another_Kind_Of_Character" class="level_2">1.4.2 Another kind of character</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/surviving_computers" class="level_1">1.5 Surviving the computer</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/the_software" class="level_1">1.6 About the software</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/using_jupyter" class="level_1">1.7 Using the Jupyter notebook</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/01/more_on_jupyter" class="level_1">1.8 More on the Jupyter notebook</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/02/to_code"><span class="nav__sub-title">2. Programming</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/sampling_problem" class="level_1">2.1 A sampling problem</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/three_girls" class="level_1">2.2 A simpler problem</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/variables_intro" class="level_1">2.3 Introduction to variables</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/functions" class="level_1">2.4 Introduction to functions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/first_pass_three_girls" class="level_1">2.5 A first pass</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/Expressions" class="level_1">2.6 Expressions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/Calls" class="level_1">2.7 Call expressions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/sub_expressions" class="level_1">2.8 Sub-expressions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/02/Names" class="level_1">2.9 Names and variables</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/03/data_types"><span class="nav__sub-title">3. Data types</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Numbers" class="level_1">3.1 Numbers</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Strings" class="level_1">3.2 Strings</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/String_Methods" class="level_2">3.2.1 String methods</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Comparison" class="level_1">3.3 Comparison</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/lists" class="level_1">3.4 Lists</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Arrays" class="level_1">3.5 Arrays</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/Ranges" class="level_1">3.6 Ranges</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/numpy_append" class="level_1">3.7 Append</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/function_arguments" class="level_1">3.8 Function arguments</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/leaping_ahead" class="level_1">3.9 Leaping ahead</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/iteration" class="level_1">3.10 Iteration with For loops</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/indentation" class="level_1">3.11 Indentation, indentation</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/reply_supreme" class="level_1">3.12 Reply to the Supreme Court</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/More_on_Arrays" class="level_1">3.13 More on arrays</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/array_indexing" class="level_1">3.14 Selecting in arrays</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/03/filling_arrays" class="level_1">3.15 Filling arrays</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/04/data_frames"><span class="nav__sub-title">4. Data frames</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/04/data_frame_intro" class="level_1">4.1 Introduction to data frames</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/04/df_series_arrays" class="level_1">4.2 Data frames, Series and arrays</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/05/permutation"><span class="nav__sub-title">5. Permutations</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/population_permutation" class="level_1">5.1 Population and permutation</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/brexit_ages" class="level_1">5.2 A permutation test</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/permutation_idea" class="level_1">5.3 The permutation idea</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/permutation_and_t_test" class="level_1">5.4 Permutation and the t-test</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/05/testing_t" class="level_1">5.5 Testing validity of tests</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/07/more_building_blocks"><span class="nav__sub-title">6. More building blocks</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/introducing_functions" class="level_1">6.1 Introduction to functions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/none" class="level_1">6.2 On None</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/functions" class="level_1">6.3 Functions in more detail</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/functions_as_values" class="level_1">6.4 Functions as values</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/conditional_statements" class="level_1">6.5 Conditional statements</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/pandas_indexing" class="level_1">6.6 Indexing in Pandas</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/noble_politics" class="level_1">6.7 Example: noble politics</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/safe_pandas" class="level_1">6.8 Safe Pandas</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/text_encoding" class="level_1">6.9 Text encoding</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/07/numbers_and_strings" class="level_1">6.10 Numbers and strings</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/08/mean"><span class="nav__sub-title">7. The mean and straight line relationships</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/mean_meaning" class="level_1">7.1 The mean as a predictor</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/where_and_argmin" class="level_1">7.2 Where and argmin</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/mean_and_slopes" class="level_1">7.3 Mean and slopes</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/optimization" class="level_1">7.4 Optimization</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/finding_lines" class="level_1">7.5 Finding lines</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/using_minimize" class="level_1">7.6 Using minimize</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/inference_on_slopes" class="level_1">7.7 Believable slopes</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/combining_boolean_arrays" class="level_1">7.8 Combining Booleans</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/standard_scores" class="level_1">7.9 Standard scores</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/08/Correlation" class="level_1">7.10 Correlation</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/09/classification"><span class="nav__sub-title">8. Classification</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Nearest_Neighbors" class="level_1">8.2 Nearest neighbors</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Training_and_Testing" class="level_1">8.3 Training and testing</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Rows_of_Tables" class="level_1">8.4 Rows of tables</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Implementing_the_Classifier" class="level_1">8.5 Implementing the classifier</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/09/Accuracy_of_the_Classifier" class="level_1">8.6 Accuracy of the classifier</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/10/confidence"><span class="nav__sub-title">9. Confidence</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/havana_math" class="level_1">9.1 The education minister</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/random_choice" class="level_1">9.2 Random choice</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/first_bayes" class="level_1">9.2 Reverse probability</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/bayes_bars" class="level_1">9.3 Bayes bars</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/10/second_bayes" class="level_1">9.4 Confidence in bars</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/end/end_of_beginning"><span class="nav__sub-title">10. The end of the beginning</span></a>
+        
+
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/exercises/exercises"><span class="nav__sub-title">Exercises</span></a>
+        
+
+        
+        <ul>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          
+          
+
+          <a href="/cfd-uob/chapters/extra/extra"><span class="nav__sub-title">Extra pages</span></a>
+        
+
+        
+        <ul>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/more_on_lists" class="level_1">More on lists</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/monty_hall_lists" class="level_1">Monty Hall with lists</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/data8_functions" class="level_1">Berkeley introduction to functions</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/mean_deviations" class="level_1">Deviations around the mean</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/mean_sq_deviations" class="level_1">Squared deviations around the mean</a></li>
+          
+            
+            
+
+            
+            
+
+            
+
+            <li><a href="/cfd-uob/chapters/extra/slope_deviations" class="level_1">Finding the best slope</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+
+  
+  </div>
+
+
+    <article class="page textbook" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="headline" content="9.2 Reverse probability">
+      <meta itemprop="description" content="In the problem for the education minister we had a sample of fast-track-marked exams from2019, and we found that the mean mark was about 65.25.  We wondered what wecould say about the eventual  when we have the marks for all 8000 or sostudents.">
+      <meta itemprop="datePublished" content="August 14, 2020">
+      
+
+      <div class="page__inner-wrap">
+        
+          <header>
+            <h1 id="page-title" class="page__title" itemprop="headline">9.2 Reverse probability
+</h1>
+          </header>
+        
+
+        <section class="page__content" itemprop="text">
+          
+            
+
+<!-- TOC will only show up if it has at least one item -->
+
+
+  <aside class="sidebar__right">
+    <nav class="toc">
+      <header><h4 class="nav__title"><i class="fas fa-list-ul"></i>   On this page</h4></header>
+      <ul class="toc__menu">
+  <li><a href="#a-reverse-probability-game">A reverse probability game</a></li>
+</ul>
+    </nav>
+  </aside>
+
+
+          
+          <!-- INTERACT LINKS -->
+
+    
+    
+    <a class="notebook-link" href="https://matthew-brett.github.io/cfd-uob/ipynb/10/first_bayes.ipynb">Download notebook</a>
+    <a class="interact-button" href="https://oubhub.org/hub/user-redirect/git-pull?repo=https://github.com//matthew-brett/cfd-uob&amp;branch=master&amp;subPath=ipynb%2F10%2Ffirst_bayes.ipynb&amp;app=notebook">Interact</a>
+
+
+          <p>In the <a href="/cfd-uob/chapters/10/havana_math">problem for the education minister</a> we had a sample of fast-track-marked exams from
+2019, and we found that the mean mark was about 65.25.  We wondered what we
+could say about the eventual  when we have the marks for all 8000 or so
+students.</p>
+
+<p>For example, we might wonder how likely it is that the eventual mean will be
+near 65.25, as it was in 2018.  Or we might wonder whether we could be say that
+the eventual mean for all the papers will around the sample mean — 54.51 —
+plus or minus a bit.   If so, what value should we give to “a bit”?</p>
+
+<p>This kind of problem can be called a problem of <em>reverse probability</em>.</p>
+
+<p>We start with simple probabilities, where we ask questions like this: what is
+the probability of seeing a mean around 54.51 if the population mean is
+actually 65.25?  Then we go in <em>reverse</em> to ask questions like: what is the
+probability that the population mean is around 65.25 given the sample mean of
+54.51?</p>
+
+<h2 id="a-reverse-probability-game">A reverse probability game</h2>
+
+<p>Imagine I offer you one of two boxes.</p>
+
+<p>One box has four red balls and one green ball.  Call this <em>BOX4</em>.</p>
+
+<p>The other box has two red balls and three green balls.  Call this <em>BOX2</em>.</p>
+
+<p>I haven’t told you which box I gave you, but I do tell you that there is a 30%
+chance that I gave you BOX4, and a 70% chance I gave you BOX2.</p>
+
+<p>Now let’s say that you shake the box I gave you, to shuffle the balls, then
+close your eyes, and take out one ball.  You open your eyes to find you have a
+red ball.</p>
+
+<p>What is the chance that I gave you BOX4?</p>
+
+<p>This is an example of a <em>reverse probability</em> problem.  You are working <em>back</em>
+from what you see (the red ball) to what I gave you (the box).</p>
+
+<p>In our exam mark problem, we are working back from what we saw (the sample mean
+of 54.51) to the eventual mean for all the exams.</p>
+
+<p>How are we going to start on our solution to the BOX4, BOX2 reverse probability
+problem? Simulation!</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('fivethirtyeight')
+</code></pre></div></div>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Make a box with 4 red balls and 1 green ball
+box4 = np.repeat(['red', 'green'], [4, 1])
+box4
+</code></pre></div></div>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Make a box with 2 red balls and 3 green balls
+box2 = np.repeat(['red', 'green'], [2, 3])
+box2
+</code></pre></div></div>
+
+<p>Now we make 10000 trials, where we:</p>
+
+<ul>
+  <li>Choose BOX4 or BOX2, with a 30% chance of BOX4.</li>
+  <li>Choose a ball at random from the resulting box.</li>
+</ul>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n_iters = 10000
+# The box for this trial.
+box_nos = np.repeat([1], n_iters)
+# The color of the ball we chose.
+ball_colors = np.repeat(['green'], n_iters)
+for i in np.arange(n_iters):
+    # Choose a box number with a 30% chance of BOX4
+    box_no = np.random.choice([4, 2], p=[0.3, 0.7])
+    # Choose a ball at random from the box.
+    if box_no == 4:
+        # Choose a ball at random from BOX4.
+        ball_color = np.random.choice(box4)
+    else:  # box 4
+        # Choose a ball at random from BOX2.
+        ball_color = np.random.choice(box2)
+    # Store the results.
+    box_nos[i] = box_no
+    ball_colors[i] = ball_color
+</code></pre></div></div>
+
+<p>Last we put the results into a data frame for convenience:</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Make these into a data frame.
+trial_results = pd.DataFrame()
+trial_results['box no'] = box_nos
+trial_results['ball color'] = ball_colors
+trial_results.head()
+</code></pre></div></div>
+
+<p>Now we can see the proportion of trials on which we drew a red ball, where the
+box we got was BOX4.</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Of the trials giving a red ball, what proportion came from box 4?
+red_ball_trials = trial_results[trial_results['ball color'] == 'red']
+p_box4 = np.count_nonzero(red_ball_trials['box no'] == 4) / len(red_ball_trials)
+p_box4
+</code></pre></div></div>
+
+<p>Of the trials giving a red ball about 66% came from BOX4.   If we see a red ball, there is a 66% chance we have sampled from BOX4.</p>
+
+<p>You have just solved your first problem in reverse probability.  The problem
+will soon reveal a simple calculation in probability called <a href="https://en.wikipedia.org/wiki/Bayes'_theorem">Bayes
+theorem</a>.</p>
+
+<p>This is a fundamental building block, so let’s go back over the simulation, to think about why we got this number.</p>
+
+<p>We can think of all these trials as coming about from a branching tree.</p>
+
+<p>At the first branching point, we split into two branches, one for BOX4 and one
+for BOX2.  The BOX4 branch is width 0.3 and the BOX2 branch is width 0.7,
+because the probability of BOX4 is 0.3 (30%).</p>
+
+<p>The simulation is very unlikely to give these numbers exactly, because it took
+a random sample.  So, the simulation proportions will be close to the
+probabilities we calculated above, but not exactly the same.</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>box4_trials = trial_results[trial_results['box no'] == 4]
+box2_trials = trial_results[trial_results['box no'] == 2]
+n_trials = len(trial_results)
+print('Box4 proportion', len(box4_trials) / n_trials)
+print('Box2 proportion', len(box2_trials) / n_trials)
+</code></pre></div></div>
+
+<p>At the second branching point, each branch splits into two.</p>
+
+<ul>
+  <li>The BOX4 branch splits into a “red” branch, which carries 4/5 (0.8, 80%) of
+the BOX4 trials, and a “green” branch, that carries 1/5 (0.2, 20%) of the
+BOX4 trials, because the probability of getting a red ball from BOX4 is 4 in
+5.</li>
+  <li>The BOX2 branch splits into a “red” branch, which carries 2/5 (0.4, 40%) of
+the BOX2 trials, and a “green” branch, which carries 3/5 (0.6, 60%) of the
+BOX2 trials, because the probability of getting a red ball from BOX2 is 2 in
+5.</li>
+</ul>
+
+<p>Thus the proportion of trials that are <em>both</em> from BOX4 <em>and</em> give a red ball
+is 0.3 (the width of the BOX4 branch) * 0.8 (the proportion of BOX4 trials
+that give red) = 0.24.</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>box4_and_red = box4_trials[box4_trials['ball color'] == 'red']
+prop_box4_and_red = len(box4_and_red) / n_trials
+print('Box4 and red proportion', prop_box4_and_red)
+</code></pre></div></div>
+
+<p>The proportion of trials that are <em>both</em> from BOX2 <em>and</em> give a red ball
+is 0.7 (the width of the BOX2 branch) * 0.4 (the proportion of BOX2 trials
+that give red) = 0.28.</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>box2_and_red = box2_trials[box2_trials['ball color'] == 'red']
+prop_box2_and_red = len(box2_and_red) / n_trials
+print('Box2 and red proportion', prop_box2_and_red)
+</code></pre></div></div>
+
+<p>We get the overall proportion of red by adding the proportion that is BOX4
+<em>and</em> red to the proportion that is BOX2 <em>and</em> red, because these are all the
+red trials.  This is 0.24 + 0.28 = 0.52.</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n_red = len(box4_and_red) + len(box2_and_red)
+prop_red = n_red / n_trials
+print('Overall proportion of red', prop_red)
+</code></pre></div></div>
+
+<p>We’ve already discovered about that 0.24 (24%) of all trials are BOX4 <em>and</em>
+red.  So the proportion of <em>all</em> red trials, that are BOX4 <em>and</em> red, is 0.24 /
+0.52 = 0.4615385.</p>
+
+<div class="input_area highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print('Proportion of all red trials that are box4', (prop_box4_and_red / prop_red))
+</code></pre></div></div>
+
+<p>To go over the logic again:</p>
+
+<ul>
+  <li>We want the proportion of “red” trials that came from BOX4.</li>
+  <li>To do this, we calculate the proportion of trials that are <em>both</em> BOX4 and
+red, and divide by the overall proportion of red trials.</li>
+  <li>The proportion of red trials that are <em>both</em> BOX4 <em>and</em> red is (the
+proportion of BOX4 trials) multiplied by (the proportion of BOX4 trials that
+are red).</li>
+</ul>
+
+<p>We have just <a href="/cfd-uob/chapters/10/bayes_theorem">discovered Bayes theorem</a>.</p>
+
+          
+        </section>
+
+        <footer class="page__meta">
+          
+          
+
+
+        </footer>
+
+        
+
+        
+  <nav class="pagination">
+    
+      <a href="/cfd-uob/chapters/10/random_choice" class="pagination--pager" title="9.2 Random choice
+">Previous</a>
+    
+    
+      <a href="/cfd-uob/chapters/10/bayes_theorem" class="pagination--pager" title="Bayes theorom
+">Next</a>
+    
+  </nav>
+
+
+      </div>
+
+      
+    </article>
+  </div>
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    
+
+    
+  <script src="/cfd-uob/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+
+
+<script src="/cfd-uob/assets/js/lunr/lunr.min.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-store.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- Custom scripts to load after site JS is loaded -->
+
+    <!-- Custom HTML used for the textbooks -->
+<!-- Configure, then load MathJax -->
+<script type="text/javascript">
+  window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      processEnvironments: true
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// --- To auto-embed hub URLs in interact links if given in a RESTful fashion ---
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return jQuery.param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = $("a").each(function() {
+    var href = this.href;
+    // If the link is an internal link...
+    if (href.search("https://matthew-brett.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + jQuery.param(params);
+      this.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+  // Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = $("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          if ('jupyterhub' == 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("https://oubhub.org", hubUrl);
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          $("a.interact-button").after($('<div class="interact-context">on ' + hubUrlNoHttp + '</div>'));
+
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+// --- Highlight the part of sidebar for current page ---
+
+// helper to replace trailing slash
+function replaceSlash(string)
+{
+    return string.replace(/\/$/, "");
+}
+
+// Add a class to the current page in the sidebar
+function highlightSidebarCurrentPage()
+{
+  var currentpage = location.href;
+  var links = $('.sidebar .nav__items a');
+  var ii = 0;
+  for(ii; ii < links.length; ii++) {
+    var link = links[ii];
+    if(replaceSlash(link.href) == replaceSlash(currentpage)) {
+      // Add CSS for styling
+      link.classList.add("current");
+      // Scroll to this element
+      $('div.sidebar').scrollTop(link.offsetTop - 300);
+    }
+  }
+}
+
+// --- Set up copy/paste for code blocks ---
+function addCopyButtonToCode(){
+  // get all <code> elements
+  var allCodeBlocksElements = $( "div.input_area code, div.highlighter-rouge code" );
+
+  allCodeBlocksElements.each(function(ii) {
+   	// add different id for each code block
+
+  	// target
+    var currentId = "codeblock" + (ii + 1);
+    $(this).attr('id', currentId);
+
+    //trigger
+    var clipButton = '<button class="btn copybtn" data-clipboard-target="#' + currentId + '"><img src="https://clipboardjs.com/assets/images/clippy.svg" width="13" alt="Copy to clipboard"></button>';
+       $(this).after(clipButton);
+    });
+
+    new Clipboard('.btn');
+}
+
+// Run scripts when page is loaded
+$(document).ready(function () {
+  // Add anchors to H1 etc links
+  anchors.add();
+  // Highlight current page in sidebar
+  highlightSidebarCurrentPage();
+  // Add copy button to code blocks
+  addCopyButtonToCode();
+  // Update the Interact link if a REST param given
+  updateInteractLink();
+});
+</script>
+
+  </body>
+</html>

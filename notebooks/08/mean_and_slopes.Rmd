@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>License - Coding for Data - 2020 edition</title>
+<meta name="description" content="">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_UK">
+<meta property="og:site_name" content="Coding for Data - 2020 edition">
+<meta property="og:title" content="Coding for Data - 2020 edition">
+<meta property="og:url" content="https://matthew-brett.github.io/cfd-uob/notebooks/08/mean_and_slopes.Rmd">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://matthew-brett.github.io/cfd-uob/notebooks/08/mean_and_slopes.Rmd">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Matthew Brett",
+      "url": "https://matthew-brett.github.io/cfd-uob",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/cfd-uob/feed.xml" type="application/atom+xml" rel="alternate" title="Coding for Data - 2020 edition Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/cfd-uob/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+
+<!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/cfd-uob/assets/css/notebook-markdown.css">
+    <link rel="stylesheet" href="/cfd-uob/assets/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/cfd-uob/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js"></script>
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/cfd-uob/">
+          <img src="/cfd-uob/images/dsfe_logo.png" class="masthead_logo" />
+          Coding for Data - 2020 edition
+        </a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/about" >About</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/syllabus" >Syllabus</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="https://matthew-brett.github.io/cfd-uob/classes" >Classes</a>
+            </li>
+          
+          
+            <li class="masthead__menu-item">
+              <a href="/cfd-uob/chapters/01/intro">Textbook</a>
+            </li>
+          
+          
+            <li class="masthead__menu-item">
+              <a href="https://oubhub.org">JupyterHub</a>
+            </li>
+          
+        </ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <!--  -->
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        In [The Mean as Predictor](mean_meaning), we found that the mean had some good
+properties as a single best predictor for a whole distribution.
+
+* The mean gives a total prediction error of zero.  Put otherwise, on average,
+  your prediction error is zero.
+* The mean gives the lowest squared error.  Put otherwise, the mean gives the
+  lowest average squared difference from the observed value.
+
+Now we can consider what predictor we should use when predicting one set of values, from a different set of values.
+
+We load our usual libraries.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+# %matplotlib inline
+# Make plots look a little bit more fancy
+plt.style.use('fivethirtyeight')
+# Print to 4 decimal places, show tiny values as 0
+np.set_printoptions(precision=4, suppress=True)
+import pandas as pd
+```
+
+We start with some [data on chronic kidney
+disease](/cfd-uob/data/chronic_kidney_disease).
+
+Download the data to your computer via this link: [ckd_clean.csv](/cfd-uob/data/ckd_clean.csv).
+
+This is a data table with one row per patient and one column per test on that
+patient.  Many of columns are values from blood tests.  Most of the patients
+have chronic kidney disease.
+
+To make things a bit easier this dataset is a version from which we have already dropped all missing values.  See the dataset page linked above for more detail.
+
+```{python}
+# Run this cell
+ckd = pd.read_csv('ckd_clean.csv')
+ckd.head()
+```
+
+We are interested in two columns from this data frame, "Packed Cell Volume" and "Hemoglobin".
+
+[Packed Cell Volume](https://en.wikipedia.org/wiki/Hematocrit) (PCV) is a
+measurement of the percentage of blood volume taken up by red blood cells.  It
+is a measurement of anemia, and anemia is a common consequence of chronic
+kidney disease.
+
+```{python}
+# Get the packed cell volume values as a Series.
+pcv_series = ckd['Packed Cell Volume']
+# Show the distribution.
+pcv_series.hist()
+```
+
+"Hemoglobin" (HGB) is the concentration of the
+[hemoglobin](https://en.wikipedia.org/wiki/Hemoglobin) molecule in blood, in
+grams per deciliter.  Hemoglobin is the iron-containing protein in red blood
+cells that carries oxygen to the tissues.
+
+```{python}
+# Get the hemoglobin concentration values as a Series.
+hgb_series = ckd['Hemoglobin']
+# Show the distribution.
+hgb_series.hist()
+```
+
+We convert these Series into arrays, to make them simpler to work with.  We do
+this with the Numpy `array` function, that makes arrays from many other types
+of object.
+
+```{python}
+pcv = np.array(pcv_series)
+hgb = np.array(hgb_series)
+```
+
+## Looking for straight lines
+
+The [Wikipedia page for PCV](https://en.wikipedia.org/wiki/Hematocrit) says (at
+the time of writing):
+
+> An estimated hematocrit as a percentage may be derived by tripling the
+> hemoglobin concentration in g/dL and dropping the units.
+> [source](https://www.doctorslounge.com/hematology/labs/hematocrit.htm).
+
+This rule-of-thumb suggests that the values for PCV will be roughly three times
+the values for HGB.
+
+Therefore, if we plot the HGB values on the x-axis of a plot, and the PCV
+values on the y-axis, we should see something that is roughly compatible with a
+straight line going through 0, 0, and with a slope of about 3.
+
+Here is the plot.  This time, for fun, we add a label to the X and Y axes with
+`xlabel` and `ylabel`.
+
+```{python}
+# Plot HGB on the x axis, PCV on the y axis
+plt.plot(hgb, pcv, 'o')
+plt.xlabel('Hemoglobin concentration')
+plt.ylabel('Packed cell volume')
+```
+
+The `'o'` argument to the plot function above is a "plot marker".  It tells
+Matplotlib to plot the points as points, rather than joining them with lines.
+The markers for the points will be filled circles, with `'o'`, but we can also
+ask for other symbols such as plus marks (with `'+'`) and crosses (with `'x'`).
+
+The line does look a bit like it has a slope of about 3.  But - is that true?
+Is the *best* slope 3?  What slope would we find, if we looked for the *best*
+slope?  What could *best* mean, for *best slope*?
+
+## Adjusting axes
+
+We would like to see what this graph looks like in relation to the origin -
+x=0, y=0.  In order to this, we can add a `plt.axis` function call, like this:
+
+```{python}
+# Plot HGB on the x axis, PCV on the y axis
+plt.plot(hgb, pcv, 'o')
+plt.xlabel('Hemoglobin concentration')
+plt.ylabel('Packed cell volume')
+# Set the x axis to go from 0 to 18, y axis from 0 to 55.
+plt.axis([0, 18, 0, 55])
+```
+
+It does look plausible that this line goes through the origin, and that makes
+sense.  All hemoglobin is in red blood cells; we might expect the volume of red
+blood cells to be zero when the hemoglobin concentration is zero.
+
+## Putting points on plots
+
+Before we go on, we will need some machinery to plot arbitrary points on plots.
+
+In fact this works in exactly the same way as the points you have already seen
+on plots.  We use the `plot` function, with a suitable plot marker.  The x
+coordinates of the points go in the first argument, and the y coordinates go in
+the second.
+
+To plot a single point, pass a single x and y coordinate value:
+
+```{python}
+plt.plot(hgb, pcv, 'o')
+# A red point at x=5, y=40
+plt.plot(5, 40, 'o', color='red')
+```
+
+To plot more than one point, pass multiple x and y coordinate values:
+
+```{python}
+plt.plot(hgb, pcv, 'o')
+# Two red points, one at [5, 40], the other at [10, 50]
+plt.plot([5, 10], [40, 50], 'o', color='red')
+```
+
+## The mean as applied to plots
+
+We want a straight line that fits these points.
+
+The straight line should do the best job it can in *predicting* the PCV values from the HGB values.
+
+We found that the mean was a good predictor for a distribution of values.  We
+could try and find a line or something similar that went through the mean of
+the PCV values, at any given HGB value.
+
+Let's split the HGB values up into bins centered on 7.5, 8.5, and so on.  Then
+we take the mean of all the PCV values corresponding to HGB values between 7
+and 8, 8 and 9, and so on.
+
+```{python}
+# The centers for our HGB bins
+hgb_bin_centers = np.arange(7.5, 17.5)
+hgb_bin_centers
+```
+
+```{python}
+# The number of bins
+n_bins = len(hgb_bin_centers)
+n_bins
+```
+
+Show the center of the bins on the x axis of the plot.
+
+```{python}
+plt.plot(hgb, pcv, 'o')
+plt.plot(hgb_bin_centers, np.zeros(n_bins), 'o', color='red')
+```
+
+Take the mean of the PCV values for each bin.
+
+```{python}
+pcv_means = np.zeros(n_bins)
+for i in np.arange(n_bins):
+    mid = hgb_bin_centers[i]
+    # Boolean identifing indices withing the HGB bin
+    fr_within_bin = (hgb >= mid - 0.5) & (hgb < mid + 0.5)
+    # Take the mean of the corresponding PCV values
+    pcv_means[i] = np.mean(pcv[fr_within_bin])
+pcv_means
+```
+
+These means should be good predictors for PCV values, given an HGB value.  We
+check the bin of the HGB value and take the corresponding PCV mean as the
+prediction.
+
+Here is a plot of the means of PCV for every bin:
+
+```{python}
+plt.plot(hgb, pcv, 'o')
+plt.plot(hgb_bin_centers, pcv_means, 'o', color='red')
+```
+
+## Finding a predicting line
+
+The means per bin give some prediction of the PCV values from the HGB.  Can we
+do better?  Can we find a line that predicts the PCV data from the HGB data?
+
+Remember, any line can be fully described by an *intercept* $c$ and a *slope*
+$s$.  A line predicts the $y$ values from the $x$ values, using the slope $s$
+and the intercept $c$:
+
+$$
+y = c + x * s
+$$
+
+The *intercept* is the value of the line when x is equal to 0.  It is therefore
+where the line crosses the y axis.
+
+In our case, let us assume the intercept is 0.  We will assume PCV of 0 if
+there is no hemoglobin.
+
+Now we want to find a good *slope*.  The *slope* is the amount that the y
+values increase for a one unit increase in the x values.  In our case, it is
+the increase in the PCV for a 1 gram / deciliter increase in the HGB.
+
+Let's guess the slope is 3, as Wikipedia told us it should be:
+
+```{python}
+slope = 3
+```
+
+Remember our line prediction for y (PCV) is:
+
+$$
+y = c + x * s
+$$
+
+where x is the HGB.  In our case we assume the intercept is 0, so:
+
+```{python}
+pcv_predicted = hgb * slope
+```
+
+Plot the predictions in red on the original data in blue.
+
+```{python}
+plt.plot(hgb, pcv, 'o')
+plt.plot(hgb, pcv_predicted, 'o', color='red')
+```
+
+The red are the predictions, the blue are the original data.  At each PCV value
+we have a prediction, and therefore, an error in our prediction; the difference
+between the predicted value and the actual values.
+
+```{python}
+error = pcv - pcv_predicted
+error[:10]
+```
+
+In this plot, for each point, we draw a thin dotted line between the prediction
+of PCV for each point, and its actual value.
+
+```{python}
+plt.plot(hgb, pcv, 'o')
+plt.plot(hgb, pcv_predicted, 'o', color='red')
+# Draw a line between predicted and actual
+for i in np.arange(len(hgb)):
+    x = hgb[i]
+    y_0 = pcv_predicted[i]
+    y_1 = pcv[i]
+    plt.plot([x, x], [y_0, y_1], ':', color='black', linewidth=1)
+```
+
+## What is a good line?
+
+We have guessed a slope, and so defined a line. We calculated the errors from
+our guessed line.
+
+How would we decide whether our slope was a good one?  Put otherwise, how would
+we decide when we have a good line?
+
+A good line should have small prediction errors. That is, the line should give
+a good prediction of the points.  That is, the line should result in small
+*errors*.
+
+We would like a slope that gives us the smallest error.
+
+## One metric for the line
+
+[The Mean as Predictor](mean_meaning) section showed that the mean is the value
+with the smallest squared distance from the other values in the distribution.
+The mean is the predictor value that minimizes the sum of squared distances
+from the other values.
+
+We can use the same metric for our line.  Instead of using a single vector as a
+predictor, now we are using the values on the line as predictors.  We want the
+HGB slope, in our case, that gives the best predictors of the PCV values.
+Specifically, we want the slope that gives the smallest sum of squares
+difference between the line prediction and the actual values.
+
+We have already calculated the prediction and error for our slope of 3, but
+let's do it again, and then calculate the *sum of squares* of the error:
+
+```{python}
+slope = 3
+pcv_predicted = hgb * slope
+error = pcv - pcv_predicted
+# The sum of squared error
+np.sum(error ** 2)
+```
+
+We are about to do this calculation many times, for many different slopes.  We
+need a *function*.
+
+In the function below, we are using [function world](../07/functions)
+to get the values of `hgb` and `pcv` defined here at the top level,
+outside *function world*. The function can see these values, from
+function world.
+
+```{python}
+def sos_error(slope):
+    predicted = hgb * slope  # 'hgb' comes from the top level
+    error = pcv - predicted  # 'pcv' comes from the top level
+    return np.sum(error ** 2)
+```
+
+First check we get the same answer as the calculation above:
+
+```{python}
+sos_error(3)
+```
+
+Does 3.5 give a higher or lower sum of squared error?
+
+```{python}
+sos_error(3.5)
+```
+
+Now we can use the same strategy as we used in the [mean meaning](mean_meaning)
+page, to try lots of slopes, and find the one that gives the smallest sum of
+squared error.
+
+```{python}
+# Slopes to try
+some_slopes = np.arange(2, 4, 0.01)
+n_slopes = len(some_slopes)
+# Try all these slopes, calculate and record sum of squared error
+sos_errors = np.zeros(n_slopes)
+for i in np.arange(n_slopes):
+    slope = some_slopes[i]
+    sos_errors[i] = sos_error(slope)
+# Show the first 10 values
+sos_errors[:10]
+```
+
+We plot the slopes we have tried, on the x axis, against the sum of squared
+error, on the y-axis.
+
+
+```{python}
+plt.plot(some_slopes, sos_errors)
+plt.xlabel('Candidate slopes')
+plt.ylabel('Sum of squared error')
+```
+
+The minimum of the sum of squared error is:
+
+```{python}
+np.min(sos_errors)
+```
+
+We want to find the slope that corresponds to this minimum.  We can use
+[argmin](where_and_argmin).
+
+```{python}
+# Index of minumum value
+i_of_min = np.argmin(sos_errors)
+i_of_min
+```
+
+This is the index position of the minimum.  We will therefore get the minimum
+(again) if we index into the original array with the index we just found:
+
+```{python}
+# Check we do in fact get the minimum at this index
+sos_errors[i_of_min]
+```
+
+Now we can get and show the slope value that corresponds the minimum sum of
+squared error:
+
+```{python}
+best_slope = some_slopes[i_of_min]
+best_slope
+```
+
+Plot the data, predictions and errors for the line that minimizes the sum of
+squared error:
+
+```{python}
+best_predicted = hgb * best_slope
+plt.plot(hgb, pcv, 'o')
+plt.plot(hgb, best_predicted, 'o', color='red')
+for i in np.arange(len(hgb)):
+    x = hgb[i]
+    y_0 = best_predicted[i]
+    y_1 = pcv[i]
+    plt.plot([x, x], [y_0, y_1], ':', color='black', linewidth=1)
+plt.title('The best-fit line using least-squared error')
+```
+
+The algorithm we have used so far, is rather slow and clunky, because we had to
+make an array with lots of slopes to try, and then go through each one to find
+the slope that minimizes the squared error.
+
+In fact, we will soon see, we can use some tricks to get Python to do all this
+work for us, much more quickly.
+
+Finding techniques for doing this automatically is a whole mathematical field,
+called [optimization](https://en.wikipedia.org/wiki/Mathematical_optimization).
+
+For now, let's leap to using these techniques on our problem, of finding the
+best slope:
+
+```{python}
+from scipy.optimize import minimize
+# 3 below is the slope value to start the search.
+res = minimize(sos_error, 3)
+res
+```
+
+The slope is in the `x` attribute of the return value:
+
+```{python}
+res.x
+```
+
+## The magic of maths
+
+We found the best (sum of squares) slope by trying lots of slopes, above, and then, rather more efficiently, by using `minimize` to do that job for us.
+
+You don't need to understand the argument below, to follow this class, but in
+this case we can work out the best slope with some [fairly simple calculus and
+algebra](../extra/slope_deviations).  It turns out like this:
+
+```{python}
+maths_slope = np.sum(hgb * pcv) / np.sum(hgb ** 2)
+maths_slope
+```
+
+See the page linked above for why this formula works for any set of x and y
+values, where the intercept is zero.
+
+But - we won't be using these mathematical short cuts in this course, we will
+be using `minimize` and friends to find the best slope by trial and error.
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    
+
+    
+  <script src="/cfd-uob/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+
+
+<script src="/cfd-uob/assets/js/lunr/lunr.min.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-store.js"></script>
+<script src="/cfd-uob/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <!-- Custom scripts to load after site JS is loaded -->
+
+    <!-- Custom HTML used for the textbooks -->
+<!-- Configure, then load MathJax -->
+<script type="text/javascript">
+  window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      processEnvironments: true
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full,Safe" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// --- To auto-embed hub URLs in interact links if given in a RESTful fashion ---
+function getJsonFromUrl(url) {
+  var query = url.split('?');
+  if (query.length < 2) {
+    // No queries so just return false
+    return false;
+  }
+  query = query[1];
+  // Collect REST params into a dictionary
+  var result = {};
+  query.split("&").forEach(function(part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+
+// Parse a Binder URL, converting it to the string needed for JupyterHub
+function binder2Jupyterhub(url) {
+  newUrl = {};
+  parts = url.split('v2/gh/')[1];
+  // Grab the base repo information
+  repoinfo = parts.split('?')[0];
+  var [org, repo, ref] = repoinfo.split('/');
+  newUrl['repo'] = ['https://github.com', org, repo].join('/');
+  newUrl['branch'] = ref
+  // Grab extra parameters passed
+  params = getJsonFromUrl(url);
+  if (params['filepath'] !== undefined) {
+    newUrl['subPath'] = params['filepath']
+  }
+  return jQuery.param(newUrl);
+}
+
+// Filter out potentially unsafe characters to prevent xss
+function safeUrl(url)
+{
+   return String(encodeURIComponent(url))
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
+function addParamToInternalLinks(hub) {
+  var links = $("a").each(function() {
+    var href = this.href;
+    // If the link is an internal link...
+    if (href.search("https://matthew-brett.github.io") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+      // Assume we're an internal link, add the hub param to it
+      var params = getJsonFromUrl(href);
+      if (params !== false) {
+        // We have REST params, so append a new one
+        params['hub'] = hub;
+      } else {
+        // Create the REST params
+        params = {'hub': hub};
+      }
+      // Update the link
+      var newHref = href.split('?')[0] + '?' + jQuery.param(params);
+      this.setAttribute('href', decodeURIComponent(newHref));
+    }
+  });
+  return false;
+}
+
+  // Update interact links
+function updateInteractLink() {
+    // hack to make this work since it expects a ? in the URL
+    rest = getJsonFromUrl("?" + location.search.substr(1));
+    hubUrl = rest['hub'];
+    if (hubUrl !== undefined) {
+      // Sanitize the hubUrl
+      hubUrl = safeUrl(hubUrl);
+      // Add HTTP text if omitted
+      if (hubUrl.indexOf('http') < 0) {hubUrl = 'http://' + hubUrl;}
+      link = $("a.interact-button")[0];
+      if (link !== undefined) {
+          // Update the interact link URL
+          var href = link.getAttribute('href');
+          if ('jupyterhub' == 'binder') {
+            // If binder links exist, we need to re-work them for jupyterhub
+            first = [hubUrl, 'hub', 'user-redirect', 'git-sync'].join('/')
+            href = first + '?' + binder2Jupyterhub(href);
+          } else {
+            // If JupyterHub links, we only need to replace the hub url
+            href = href.replace("https://oubhub.org", hubUrl);
+          }
+          link.setAttribute('href', decodeURIComponent(href));
+
+          // Add text after interact link saying where we're launching
+          hubUrlNoHttp = decodeURIComponent(hubUrl).replace('http://', '').replace('https://', '');
+          $("a.interact-button").after($('<div class="interact-context">on ' + hubUrlNoHttp + '</div>'));
+
+      }
+      // Update internal links so we retain the hub url
+      addParamToInternalLinks(hubUrl);
+    }
+}
+
+// --- Highlight the part of sidebar for current page ---
+
+// helper to replace trailing slash
+function replaceSlash(string)
+{
+    return string.replace(/\/$/, "");
+}
+
+// Add a class to the current page in the sidebar
+function highlightSidebarCurrentPage()
+{
+  var currentpage = location.href;
+  var links = $('.sidebar .nav__items a');
+  var ii = 0;
+  for(ii; ii < links.length; ii++) {
+    var link = links[ii];
+    if(replaceSlash(link.href) == replaceSlash(currentpage)) {
+      // Add CSS for styling
+      link.classList.add("current");
+      // Scroll to this element
+      $('div.sidebar').scrollTop(link.offsetTop - 300);
+    }
+  }
+}
+
+// --- Set up copy/paste for code blocks ---
+function addCopyButtonToCode(){
+  // get all <code> elements
+  var allCodeBlocksElements = $( "div.input_area code, div.highlighter-rouge code" );
+
+  allCodeBlocksElements.each(function(ii) {
+   	// add different id for each code block
+
+  	// target
+    var currentId = "codeblock" + (ii + 1);
+    $(this).attr('id', currentId);
+
+    //trigger
+    var clipButton = '<button class="btn copybtn" data-clipboard-target="#' + currentId + '"><img src="https://clipboardjs.com/assets/images/clippy.svg" width="13" alt="Copy to clipboard"></button>';
+       $(this).after(clipButton);
+    });
+
+    new Clipboard('.btn');
+}
+
+// Run scripts when page is loaded
+$(document).ready(function () {
+  // Add anchors to H1 etc links
+  anchors.add();
+  // Highlight current page in sidebar
+  highlightSidebarCurrentPage();
+  // Add copy button to code blocks
+  addCopyButtonToCode();
+  // Update the Interact link if a REST param given
+  updateInteractLink();
+});
+</script>
+
+  </body>
+</html>

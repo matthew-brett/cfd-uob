@@ -1,0 +1,4 @@
+# Schooling and fertility
+
+Please see latest version at
+<https://github.com/matthew-brett/datasets/tree/master/gender_stats>.
